@@ -54,6 +54,7 @@
 #include <ctype.h>
 #include <sys/time.h>
 #include <sys/stat.h>
+#include <sys/resource.h>
 
 #include <signal.h>
 #include <errno.h>

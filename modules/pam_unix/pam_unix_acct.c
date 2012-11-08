@@ -48,6 +48,8 @@
 #include <time.h>		/* for time() */
 #include <errno.h>
 #include <sys/wait.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 #include <security/_pam_macros.h>
 
