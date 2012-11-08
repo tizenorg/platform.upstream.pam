@@ -14,7 +14,6 @@ Source0:        %{name}-%{version}.tar.bz2
 Source1:        system-auth
 Source2:        other
 Source1001:     %{name}.manifest
-Patch0:         pam-fix-includes.patch
 
 BuildRequires:  autoconf,
 BuildRequires:  automake,
@@ -60,7 +59,6 @@ PAM-aware applications and modules for use with PAM.
 
 %prep
 %setup -q
-%patch0 -p1
 
 libtoolize -f #--copy --force && aclocal && autoheader
 autoreconf
