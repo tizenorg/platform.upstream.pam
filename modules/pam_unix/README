@@ -99,7 +99,8 @@ remember=n
 
     The last n passwords for each user are saved in /etc/security/opasswd in
     order to force password change history and keep the user from alternating
-    between the same password too frequently.
+    between the same password too frequently. Instead of this option the
+    pam_pwhistory module should be used.
 
 shadow
 

@@ -1,12 +1,12 @@
 .\"     Title: time.conf
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 06/21/2011
+.\"      Date: 08/17/2012
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "TIME\&.CONF" "5" "06/21/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
+.TH "TIME\&.CONF" "5" "08/17/2012" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -252,11 +252,18 @@ Games (configured to use PAM) are only to be accessed out of working hours\&. Th
 .fam C
 .ps -1
 .nf
-.BB lightgray
- 
+.if t \{\
+.sp -1
+.\}
+.BB lightgray adjust-for-leading-newline
+.sp -1
+
 games ; * ; !waster ; Wd0000\-2400 | Wk1800\-0800
       
-.EB lightgray
+.EB lightgray adjust-for-leading-newline
+.if t \{\
+.sp 1
+.\}
 .fi
 .fam
 .ps +1

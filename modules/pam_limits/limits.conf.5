@@ -1,12 +1,12 @@
 .\"     Title: limits.conf
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 06/21/2011
+.\"      Date: 08/17/2012
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "LIMITS\&.CONF" "5" "06/21/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
+.TH "LIMITS\&.CONF" "5" "08/17/2012" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -169,6 +169,16 @@
 .SH "Name"
 limits.conf \- configuration file for the pam_limits module
 .SH "DESCRIPTION"
+.PP
+The
+\fIpam_limits\&.so\fR
+module applies ulimit limits, nice priority and number of simultaneous login sessions limit to user login sessions\&. This description of the configuration file syntax applies to the
+\FC/etc/security/limits\&.conf\F[]
+file and
+\FC*\&.conf\F[]
+files in the
+\FC/etc/security/limits\&.d\F[]
+directory\&.
 .PP
 The syntax of the lines is as follows:
 .PP
@@ -424,7 +434,9 @@ In general, individual limits have priority over group limits, so if you impose 
 group, but one of the members in this group have a limits line, the user will have its limits set according to this line\&.
 .PP
 Also, please note that all limit settings are set
-\fIper login\fR\&. They are not global, nor are they permanent; existing only for the duration of the session\&.
+\fIper login\fR\&. They are not global, nor are they permanent; existing only for the duration of the session\&. One exception is the
+\fImaxlogin\fR
+option, this one is system wide\&. But there is a race, concurrent logins at the same time will not always be detect as such but only counted as one\&.
 .PP
 In the
 \fIlimits\fR

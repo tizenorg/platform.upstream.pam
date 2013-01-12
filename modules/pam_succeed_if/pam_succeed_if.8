@@ -1,12 +1,12 @@
 .\"     Title: pam_succeed_if
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 06/21/2011
+.\"      Date: 08/17/2012
 .\"    Manual: Linux-PAM
 .\"    Source: Linux-PAM
 .\"  Language: English
 .\"
-.TH "PAM_SUCCEED_IF" "8" "06/21/2011" "Linux-PAM" "Linux\-PAM"
+.TH "PAM_SUCCEED_IF" "8" "08/17/2012" "Linux-PAM" "Linux\-PAM"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -175,7 +175,7 @@ pam_succeed_if \- test account characteristics
 .fam
 .SH "DESCRIPTION"
 .PP
-pam_succeed_if\&.so is designed to succeed or fail authentication based on characteristics of the account belonging to the user being authenticated\&. One use is to select whether to load other modules based on this test\&.
+pam_succeed_if\&.so is designed to succeed or fail authentication based on characteristics of the account belonging to the user being authenticated or values of other PAM items\&. One use is to select whether to load other modules based on this test\&.
 .PP
 The module should be given one or more conditions as module arguments, and authentication will succeed only if all of the conditions are met\&.
 .SH "OPTIONS"
@@ -221,7 +221,10 @@ Available fields are
 \fIuid\fR,
 \fIgid\fR,
 \fIshell\fR,
-\fIhome\fR
+\fIhome\fR,
+\fIruser\fR,
+\fIrhost\fR,
+\fItty\fR
 and
 \fIservice\fR:
 .PP

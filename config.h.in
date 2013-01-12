@@ -112,7 +112,7 @@
 /* Define to 1 if you have the `getutent_r' function. */
 #undef HAVE_GETUTENT_R
 
-/* Define if you have the iconv() function and it works. */
+/* Define if you have the iconv() function. */
 #undef HAVE_ICONV
 
 /* Define to 1 if you have the `inet_ntop' function. */
@@ -141,6 +141,9 @@
 
 /* Define to 1 if audit support should be compiled in. */
 #undef HAVE_LIBAUDIT
+
+/* Define to 1 if you have cracklib. */
+#undef HAVE_LIBCRACK
 
 /* Define to 1 if xcrypt support should be compiled in. */
 #undef HAVE_LIBXCRYPT
@@ -309,6 +312,9 @@
 
 /* Define to the one symbol short name of this package. */
 #undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION

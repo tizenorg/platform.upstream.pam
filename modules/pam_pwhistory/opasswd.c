@@ -113,8 +113,8 @@ compare_password(const char *newpass, const char *oldpass)
 
 /* Check, if the new password is already in the opasswd file.  */
 int
-check_old_password (pam_handle_t *pamh, const char *user,
-		    const char *newpass, int debug)
+check_old_pass (pam_handle_t *pamh, const char *user,
+		const char *newpass, int debug)
 {
   int retval = PAM_SUCCESS;
   FILE *oldpf;
@@ -209,8 +209,8 @@ check_old_password (pam_handle_t *pamh, const char *user,
 }
 
 int
-save_old_password (pam_handle_t *pamh, const char *user, uid_t uid,
-		   const char *oldpass, int howmany, int debug UNUSED)
+save_old_pass (pam_handle_t *pamh, const char *user, uid_t uid,
+	       const char *oldpass, int howmany, int debug UNUSED)
 {
   char opasswd_tmp[] = TMP_PASSWORDS_FILE;
   struct stat opasswd_stat;
@@ -395,7 +395,7 @@ save_old_password (pam_handle_t *pamh, const char *user, uid_t uid,
 				  entry.user, entry.uid, entry.count,
 				  oldpass) < 0)
 		      {
-    		        free (save);
+		        free (save);
 			retval = PAM_AUTHTOK_ERR;
 			fclose (oldpf);
 			fclose (newpf);
@@ -408,7 +408,7 @@ save_old_password (pam_handle_t *pamh, const char *user, uid_t uid,
 				  entry.user, entry.uid, entry.count,
 				  entry.old_passwords, oldpass) < 0)
 		      {
-    		        free (save);
+		        free (save);
 			retval = PAM_AUTHTOK_ERR;
 			fclose (oldpf);
 			fclose (newpf);

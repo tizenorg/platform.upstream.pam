@@ -1,12 +1,12 @@
 .\"     Title: pam_lastlog
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 06/21/2011
+.\"      Date: 08/17/2012
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "PAM_LASTLOG" "8" "06/21/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_LASTLOG" "8" "08/17/2012" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -167,11 +167,11 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "Name"
-pam_lastlog \- PAM module to display date of last login
+pam_lastlog \- PAM module to display date of last login and perform inactive account lock out
 .SH "Synopsis"
 .fam C
 .HP \w'\fBpam_lastlog\&.so\fR\ 'u
-\fBpam_lastlog\&.so\fR [debug] [silent] [never] [nodate] [nohost] [noterm] [nowtmp] [noupdate] [showfailed]
+\fBpam_lastlog\&.so\fR [debug] [silent] [never] [nodate] [nohost] [noterm] [nowtmp] [noupdate] [showfailed] [inactive=<days>]
 .fam
 .SH "DESCRIPTION"
 .PP
@@ -180,6 +180,8 @@ pam_lastlog is a PAM module to display a line of information about the last logi
 file\&.
 .PP
 Some applications may perform this function themselves\&. In such cases, this module is not necessary\&.
+.PP
+If the module is called in the auth or account phase, the accounts that were not used recently enough will be disallowed to log in\&. The check is not performed for the root account so the root is never locked out\&.
 .SH "OPTIONS"
 .PP
 \fBdebug\fR
@@ -232,11 +234,20 @@ Display number of failed login attempts and the date of the last failed attempt 
 \fBnodate\fR
 is specified\&.
 .RE
+.PP
+\fBinactive=<days>\fR
+.RS 4
+This option is specific for the auth or account phase\&. It specifies the number of days after the last login of the user when the user will be locked out by the module\&. The default value is 90\&.
+.RE
 .SH "MODULE TYPES PROVIDED"
 .PP
-Only the
+The
+\fBauth\fR
+and
+\fBaccount\fR
+module type allows to lock out users which did not login recently enough\&. The
 \fBsession\fR
-module type is provided\&.
+module type is provided for displaying the information about the last login and/or updating the lastlog and wtmp files\&.
 .SH "RETURN VALUES"
 .PP
 .PP
@@ -253,6 +264,16 @@ Internal service module error\&.
 PAM_USER_UNKNOWN
 .RS 4
 User not known\&.
+.RE
+.PP
+PAM_AUTH_ERR
+.RS 4
+User locked out in the auth or account phase due to inactivity\&.
+.RE
+.PP
+PAM_IGNORE
+.RS 4
+There was an error during reading the lastlog file in the auth or account phase and thus inactivity of the user cannot be determined\&.
 .RE
 .SH "EXAMPLES"
 .PP
@@ -284,6 +305,33 @@ to display the last login time of an user:
 .if n \{\
 .RE
 .\}
+.PP
+To reject the user if he did not login during the previous 50 days the following line can be used:
+.sp
+.if n \{\
+.RS 4
+.\}
+.fam C
+.ps -1
+.nf
+.if t \{\
+.sp -1
+.\}
+.BB lightgray adjust-for-leading-newline
+.sp -1
+
+    auth  required  pam_lastlog\&.so inactive=50
+      
+.EB lightgray adjust-for-leading-newline
+.if t \{\
+.sp 1
+.\}
+.fi
+.fam
+.ps +1
+.if n \{\
+.RE
+.\}
 .SH "FILES"
 .PP
 \FC/var/log/lastlog\F[]
@@ -299,3 +347,5 @@ Lastlog logging file
 .SH "AUTHOR"
 .PP
 pam_lastlog was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
+.PP
+Inactive account lock out added by Tomáš Mráz <tm@t8m\&.info>\&.

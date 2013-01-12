@@ -1,20 +1,22 @@
-# translation of Linux-PAM.po to Kazakh
-# Copyright (C) 2009 Linux-PAM Project
-# This file is distributed under the same license as the PACKAGE package.
-# Baurzhan Muftakhidinov@gmail.com
+# Kazakh translation for Linux-PAM.
+# Copyright (C) 2012 Linux-PAM's COPYRIGHT HOLDER
+# This file is distributed under the same license as the Linux-PAM package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2009-2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Linux-PAM 1.0.3\n"
+"Project-Id-Version: Linux-PAM\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/projects/pam\n"
-"POT-Creation-Date: 2011-06-21 12:57+0200\n"
-"PO-Revision-Date: 2009-02-26 13:07+0600\n"
-"Last-Translator: Baurzhan M. <baurthefirst@gmail.com>\n"
+"POT-Creation-Date: 2012-08-17 11:35+0200\n"
+"PO-Revision-Date: 2012-05-11 23:45+0600\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+"X-Poedit-Language: Kazakh\n"
+"X-Poedit-Country: KAZAKHSTAN\n"
 
 #: libpam_misc/misc_conv.c:33
 msgid "...Time is running out...\n"
@@ -30,36 +32,36 @@ msgid "erroneous conversation (%d)\n"
 msgstr "қате сұхбат (%d)\n"
 
 #: libpam/pam_get_authtok.c:39 modules/pam_exec/pam_exec.c:142
-#: modules/pam_unix/pam_unix_auth.c:157 modules/pam_userdb/pam_userdb.c:64
+#: modules/pam_unix/pam_unix_auth.c:160 modules/pam_userdb/pam_userdb.c:64
 msgid "Password: "
 msgstr "Пароль:"
 
-#: libpam/pam_get_authtok.c:41 modules/pam_cracklib/pam_cracklib.c:66
+#: libpam/pam_get_authtok.c:41 modules/pam_cracklib/pam_cracklib.c:68
 #, c-format
 msgid "New %s%spassword: "
 msgstr "%s%sүшін жаңа пароль: "
 
-#: libpam/pam_get_authtok.c:43 modules/pam_cracklib/pam_cracklib.c:68
+#: libpam/pam_get_authtok.c:43 modules/pam_cracklib/pam_cracklib.c:70
 #, c-format
 msgid "Retype new %s%spassword: "
 msgstr "%s%sүшін жаңа парольді қайта енгізіңіз: "
 
-#: libpam/pam_get_authtok.c:44 modules/pam_cracklib/pam_cracklib.c:69
+#: libpam/pam_get_authtok.c:44 modules/pam_cracklib/pam_cracklib.c:71
 msgid "Sorry, passwords do not match."
 msgstr "Кешіріңіз, парольдер өзара сәйкес емес."
 
-#: libpam/pam_get_authtok.c:133 libpam/pam_get_authtok.c:209
+#: libpam/pam_get_authtok.c:135 libpam/pam_get_authtok.c:211
 #, c-format
 msgid "Retype %s"
 msgstr "%s қайта енгізіңіз"
 
-#: libpam/pam_get_authtok.c:153 libpam/pam_get_authtok.c:222
+#: libpam/pam_get_authtok.c:155 libpam/pam_get_authtok.c:227
 msgid "Password change aborted."
 msgstr "Парольді өзгертуден бас тартылды."
 
 #: libpam/pam_item.c:311
 msgid "login:"
-msgstr "тіркелу:"
+msgstr "тіркелгі:"
 
 #: libpam/pam_strerror.c:40
 msgid "Success"
@@ -67,7 +69,7 @@ msgstr "Сәтті"
 
 #: libpam/pam_strerror.c:42
 msgid "Critical error - immediate abort"
-msgstr "Критикалық қате - ұзамай-ақ шығу"
+msgstr "Қатаң қате - ұзамай-ақ шығу"
 
 #: libpam/pam_strerror.c:44
 msgid "Failed to load module"
@@ -125,11 +127,11 @@ msgstr "Пайдаланушы тіркелгісінің мерзімі аяқ�
 
 #: libpam/pam_strerror.c:70
 msgid "Cannot make/remove an entry for the specified session"
-msgstr "Көрсетілген сеанс үшін жазбаны жасау/өшіру мүмкін емес"
+msgstr "Көрсетілген сессия үшін жазбаны жасау/өшіру мүмкін емес"
 
 #: libpam/pam_strerror.c:72
 msgid "Authentication service cannot retrieve user credentials"
-msgstr "Шындылықты тексеру қызметі пайдаланушының мәліметтерін жүктей алмайды"
+msgstr "Шындылықты тексеру қызметі пайдаланушының мәліметтерін жүктей алмады"
 
 #: libpam/pam_strerror.c:74
 msgid "User credentials expired"
@@ -195,61 +197,65 @@ msgstr "Бағдарлама libpam-ды қайтадан шақыруы кер�
 msgid "Unknown PAM error"
 msgstr "Белгісіз PAM қатесі"
 
-#: modules/pam_cracklib/pam_cracklib.c:493
+#: modules/pam_cracklib/pam_cracklib.c:618
 msgid "is the same as the old one"
 msgstr "алдыңғысына сәйкес болып тұр"
 
-#: modules/pam_cracklib/pam_cracklib.c:499
-#: modules/pam_cracklib/pam_cracklib.c:503
-#: modules/pam_cracklib/pam_cracklib.c:513
-#, fuzzy
+#: modules/pam_cracklib/pam_cracklib.c:624
+#: modules/pam_cracklib/pam_cracklib.c:628
+#: modules/pam_cracklib/pam_cracklib.c:638
 msgid "memory allocation error"
-msgstr "Сұхбат қатесі"
+msgstr "жадыны бөлу қатесі"
 
-#: modules/pam_cracklib/pam_cracklib.c:518
+#: modules/pam_cracklib/pam_cracklib.c:643
 msgid "is a palindrome"
 msgstr "палиндром болып тұр"
 
-#: modules/pam_cracklib/pam_cracklib.c:521
+#: modules/pam_cracklib/pam_cracklib.c:646
 msgid "case changes only"
 msgstr "өзгерістер таңбалардың регистрінде ғана"
 
-#: modules/pam_cracklib/pam_cracklib.c:524
+#: modules/pam_cracklib/pam_cracklib.c:649
 msgid "is too similar to the old one"
 msgstr "ескі парольге өте ұқсас"
 
-#: modules/pam_cracklib/pam_cracklib.c:527
+#: modules/pam_cracklib/pam_cracklib.c:652
 msgid "is too simple"
 msgstr "өте оңай болып тұр"
 
-#: modules/pam_cracklib/pam_cracklib.c:530
+#: modules/pam_cracklib/pam_cracklib.c:655
 msgid "is rotated"
 msgstr "аударылған ескі пароль"
 
-#: modules/pam_cracklib/pam_cracklib.c:533
+#: modules/pam_cracklib/pam_cracklib.c:658
 msgid "not enough character classes"
 msgstr "керек таңбалар кластары жоқ"
 
-#: modules/pam_cracklib/pam_cracklib.c:536
+#: modules/pam_cracklib/pam_cracklib.c:661
 msgid "contains too many same characters consecutively"
 msgstr "құрамында бірдей таңбалардың тізбегі бар"
 
-#: modules/pam_cracklib/pam_cracklib.c:539
+#: modules/pam_cracklib/pam_cracklib.c:664
+#, fuzzy
+msgid "contains too long of a monotonic character sequence"
+msgstr "құрамында бірдей таңбалардың тізбегі бар"
+
+#: modules/pam_cracklib/pam_cracklib.c:667
 msgid "contains the user name in some form"
 msgstr "құрамында пайдаланушы аты бар"
 
-#: modules/pam_cracklib/pam_cracklib.c:573
-#: modules/pam_unix/pam_unix_passwd.c:488
+#: modules/pam_cracklib/pam_cracklib.c:701
+#: modules/pam_unix/pam_unix_passwd.c:494
 msgid "No password supplied"
 msgstr "Пароль көрсетілмеді"
 
-#: modules/pam_cracklib/pam_cracklib.c:573
-#: modules/pam_unix/pam_unix_passwd.c:488
+#: modules/pam_cracklib/pam_cracklib.c:701
+#: modules/pam_unix/pam_unix_passwd.c:494
 msgid "Password unchanged"
 msgstr "Пароль өзгертілмеді"
 
-#: modules/pam_cracklib/pam_cracklib.c:593
-#: modules/pam_cracklib/pam_cracklib.c:676
+#: modules/pam_cracklib/pam_cracklib.c:721
+#: modules/pam_cracklib/pam_cracklib.c:803
 #, c-format
 msgid "BAD PASSWORD: %s"
 msgstr "ҚАТЕ ПАРОЛЬ: %s"
@@ -270,55 +276,55 @@ msgid "%s failed: unknown status 0x%x"
 msgstr "%s қатесі: белгісіз қалып-күйі 0x%x"
 
 #. TRANSLATORS: "strftime options for date of last login"
-#: modules/pam_lastlog/pam_lastlog.c:201 modules/pam_lastlog/pam_lastlog.c:433
+#: modules/pam_lastlog/pam_lastlog.c:282 modules/pam_lastlog/pam_lastlog.c:492
 msgid " %a %b %e %H:%M:%S %Z %Y"
 msgstr " %a %b %e %H:%M:%S %Z %Y"
 
 #. TRANSLATORS: " from <host>"
-#: modules/pam_lastlog/pam_lastlog.c:210 modules/pam_lastlog/pam_lastlog.c:442
+#: modules/pam_lastlog/pam_lastlog.c:291 modules/pam_lastlog/pam_lastlog.c:501
 #, c-format
 msgid " from %.*s"
 msgstr "қайдан: %.*s"
 
 #. TRANSLATORS: " on <terminal>"
-#: modules/pam_lastlog/pam_lastlog.c:222 modules/pam_lastlog/pam_lastlog.c:454
+#: modules/pam_lastlog/pam_lastlog.c:303 modules/pam_lastlog/pam_lastlog.c:513
 #, c-format
 msgid " on %.*s"
 msgstr "қайда: %.*s"
 
 #. TRANSLATORS: "Last login: <date> from <host> on <terminal>"
-#: modules/pam_lastlog/pam_lastlog.c:232
+#: modules/pam_lastlog/pam_lastlog.c:313
 #, c-format
 msgid "Last login:%s%s%s"
 msgstr "Соңғы рет жүйеге кіру:%s%s%s"
 
-#: modules/pam_lastlog/pam_lastlog.c:238
+#: modules/pam_lastlog/pam_lastlog.c:319
 msgid "Welcome to your new account!"
-msgstr "Жаңа тіркелгіге қош келдіңіз!"
+msgstr "Жаңа тіркелгңізіге қош келдіңіз!"
 
 #. TRANSLATORS: "Last failed login: <date> from <host> on <terminal>"
-#: modules/pam_lastlog/pam_lastlog.c:464
+#: modules/pam_lastlog/pam_lastlog.c:523
 #, c-format
 msgid "Last failed login:%s%s%s"
 msgstr "Соңғы сәтсіз жүйеге кіру талабы:%s%s%s"
 
-#: modules/pam_lastlog/pam_lastlog.c:473 modules/pam_lastlog/pam_lastlog.c:480
+#: modules/pam_lastlog/pam_lastlog.c:532 modules/pam_lastlog/pam_lastlog.c:539
 #, c-format
 msgid "There was %d failed login attempt since the last successful login."
 msgid_plural ""
 "There were %d failed login attempts since the last successful login."
-msgstr[0] "Соңғы сәтті жүйеге кіру реттен кейін %d қате талаптар болған."
+msgstr[0] "Соңғы сәтті жүйеге кіру реттен кейін %d қате талап болған."
 
 #. TRANSLATORS: only used if dngettext is not supported
-#: modules/pam_lastlog/pam_lastlog.c:485
+#: modules/pam_lastlog/pam_lastlog.c:544
 #, c-format
 msgid "There were %d failed login attempts since the last successful login."
-msgstr "Соңғы сәтті жүйеге кіру реттен кейін %d қате талаптар болған."
+msgstr "Соңғы сәтті жүйеге кіру реттен кейін %d қате талап болған."
 
 #: modules/pam_limits/pam_limits.c:1079
 #, c-format
 msgid "Too many logins for '%s'."
-msgstr "'%s' үшін жүйеге кіру талап саны шектен көп."
+msgstr "'%s' үшін жүйеге кіру талап саны тым көп."
 
 #: modules/pam_mail/pam_mail.c:297
 msgid "No mail."
@@ -359,16 +365,21 @@ msgstr "Сізде %s бумасында поштаңыз бар."
 #: modules/pam_mkhomedir/pam_mkhomedir.c:113
 #, c-format
 msgid "Creating directory '%s'."
-msgstr "'%s' бумасын құру."
+msgstr "'%s' бумасын жасау."
 
 #: modules/pam_mkhomedir/pam_mkhomedir.c:183
 #, c-format
 msgid "Unable to create and initialize directory '%s'."
-msgstr "%s бумасын құру мүмкін емес: %m"
+msgstr "%s бумасын жасау мүмкін емес: %m"
 
-#: modules/pam_pwhistory/pam_pwhistory.c:215
-#: modules/pam_unix/pam_unix_passwd.c:509
+#: modules/pam_pwhistory/pam_pwhistory.c:217
+#: modules/pam_unix/pam_unix_passwd.c:515
 msgid "Password has been already used. Choose another."
+msgstr "Пароль осыған дейін қолданған. Басқасын таңдаңыз."
+
+#: modules/pam_pwhistory/pam_pwhistory.c:224
+#, fuzzy
+msgid "Password has been already used."
 msgstr "Пароль осыған дейін қолданған. Басқасын таңдаңыз."
 
 #: modules/pam_selinux/pam_selinux.c:172
@@ -401,17 +412,17 @@ msgstr "Басқа роль не деңгейді енгізуді қалайс�
 msgid "No default type for role %s\n"
 msgstr "%s ролі үшін бастапқы түрі көрсетілмеген\n"
 
-#: modules/pam_selinux/pam_selinux.c:688
+#: modules/pam_selinux/pam_selinux.c:616
 #, c-format
 msgid "Unable to get valid context for %s"
 msgstr "%s үшін дұрыс контексті алу мүмкін емес"
 
-#: modules/pam_selinux/pam_selinux.c:742
+#: modules/pam_selinux/pam_selinux.c:735
 #, c-format
 msgid "Security Context %s Assigned"
 msgstr "%s қауіпсіздік контексті орнатылды"
 
-#: modules/pam_selinux/pam_selinux.c:763
+#: modules/pam_selinux/pam_selinux.c:751
 #, c-format
 msgid "Key Creation Context %s Assigned"
 msgstr "%s кілттерді жасау қауіпсіздік контексті орнатылды"
@@ -515,60 +526,58 @@ msgstr ""
 #: modules/pam_timestamp/pam_timestamp.c:345
 #, c-format
 msgid "Access granted (last access was %ld seconds ago)."
-msgstr "Рұқсат расталған (соңғы рет %ld секунд бұрын болған)"
+msgstr "Рұқсат расталған (соңғы рет %ld секунд бұрын болған)."
 
-#: modules/pam_unix/pam_unix_acct.c:236 modules/pam_unix/pam_unix_acct.c:258
+#: modules/pam_unix/pam_unix_acct.c:241 modules/pam_unix/pam_unix_acct.c:263
 msgid "Your account has expired; please contact your system administrator"
 msgstr ""
 "Тіркелгіңіздің мерзімі аяқталған; жүйелік администраторыңызға хабарласыңыз"
 
-#: modules/pam_unix/pam_unix_acct.c:244
+#: modules/pam_unix/pam_unix_acct.c:249
 msgid "You are required to change your password immediately (root enforced)"
-msgstr "Сіз өзіңіздің пароліңізді қазір ауыстыруыңыз керек (root мәжбүрлеген)"
+msgstr "Сізге пароліңізді қазір ауыстыру керек (root мәжбүрлеген)"
 
-#: modules/pam_unix/pam_unix_acct.c:250
+#: modules/pam_unix/pam_unix_acct.c:255
 msgid "You are required to change your password immediately (password aged)"
-msgstr ""
-"Сіз өзіңіздің пароліңізді қазір ауыстыруыңыз керек (парольдің мерзімі "
-"аяқталған)"
+msgstr "Сізге пароліңізді қазір ауыстыру керек (парольдің мерзімі аяқталған)"
 
-#: modules/pam_unix/pam_unix_acct.c:271 modules/pam_unix/pam_unix_acct.c:278
+#: modules/pam_unix/pam_unix_acct.c:276 modules/pam_unix/pam_unix_acct.c:283
 #, c-format
 msgid "Warning: your password will expire in %d day"
 msgid_plural "Warning: your password will expire in %d days"
 msgstr[0] "Ескерту: сіздің пароліңіздің мерзімі %d күнде бітеді"
 
 #. TRANSLATORS: only used if dngettext is not supported
-#: modules/pam_unix/pam_unix_acct.c:283
+#: modules/pam_unix/pam_unix_acct.c:288
 #, c-format
 msgid "Warning: your password will expire in %d days"
 msgstr "Ескерту: сіздің пароліңіздің мерзімі %d күнде бітеді"
 
-#: modules/pam_unix/pam_unix_passwd.c:390
+#: modules/pam_unix/pam_unix_passwd.c:396
 msgid "NIS password could not be changed."
-msgstr "NIS паролін өзгерту мүмкін емес"
+msgstr "NIS паролін өзгерту мүмкін емес."
 
-#: modules/pam_unix/pam_unix_passwd.c:505
+#: modules/pam_unix/pam_unix_passwd.c:511
 msgid "You must choose a longer password"
 msgstr "Сізге ұзынырақ парольді таңдау керек"
 
-#: modules/pam_unix/pam_unix_passwd.c:612
+#: modules/pam_unix/pam_unix_passwd.c:617
 #, c-format
 msgid "Changing password for %s."
 msgstr "%s үшін парольді өзгерту."
 
-#: modules/pam_unix/pam_unix_passwd.c:623
+#: modules/pam_unix/pam_unix_passwd.c:628
 msgid "(current) UNIX password: "
 msgstr "(ағымдағы) UNIX паролі: "
 
-#: modules/pam_unix/pam_unix_passwd.c:658
+#: modules/pam_unix/pam_unix_passwd.c:663
 msgid "You must wait longer to change your password"
 msgstr "Пароліңізді өзгерті үшін біраз күтуіңіз керек"
 
-#: modules/pam_unix/pam_unix_passwd.c:718
+#: modules/pam_unix/pam_unix_passwd.c:723
 msgid "Enter new UNIX password: "
 msgstr "Жаңа UNIX паролін енгізіңіз: "
 
-#: modules/pam_unix/pam_unix_passwd.c:719
+#: modules/pam_unix/pam_unix_passwd.c:724
 msgid "Retype new UNIX password: "
 msgstr "Жаңа UNIX паролін қайта енгізіңіз: "
