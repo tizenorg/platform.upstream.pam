@@ -4,16 +4,15 @@
 %define _pamconfdir %{_sysconfdir}/pam.d
 
 Name:           pam
-Version:        1.1.5
+Version:        1.1.6
 Release:        1
 License:        BSD and GPLv2+ and BSD with advertising
 Summary:        PAM
 Url:            http://www.linux-pam.org/
 Group:          System/Base
-Source0:        %{name}-%{version}.tar.bz2
+Source0:        Linux-PAM-%{version}.tar.bz2
 Source1:        system-auth
 Source2:        other
-Source1001:     %{name}.manifest
 
 BuildRequires:  autoconf,
 BuildRequires:  automake,
@@ -58,13 +57,12 @@ contains header files and static libraries used for building both
 PAM-aware applications and modules for use with PAM.
 
 %prep
-%setup -q
+%setup -q -n Linux-PAM-%{version}
 
 libtoolize -f #--copy --force && aclocal && autoheader
 autoreconf
 
 %build
-cp %{SOURCE1001} .
 CFLAGS="-fPIC %{optflags} " ; export CFLAGS
 
 %configure \
@@ -109,8 +107,7 @@ fi
 
 
 %files
-%manifest pam.manifest
-%doc Copyright
+%license Copyright
 %{_sbindir}/pam_tally
 %{_sbindir}/pam_tally2
 %attr(4755,root,root) %{_sbindir}/pam_timestamp_check
@@ -183,11 +180,9 @@ fi
 %files devel
 %manifest pam.manifest
 %{_includedir}/security/*
-%doc %{_mandir}/man3/*
-%doc %{_mandir}/man5/*
-%doc %{_mandir}/man8/*
 %{_libdir}/libpam.so
 %{_libdir}/libpam_misc.so
 %{_libdir}/libpamc.so
 %{_libdir}/security/pam_tally2.so
 
+%docs_package
