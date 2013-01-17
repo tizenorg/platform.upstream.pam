@@ -14,8 +14,8 @@ Source0:        Linux-PAM-%{version}.tar.bz2
 Source1:        system-auth
 Source2:        other
 
-BuildRequires:  autoconf,
-BuildRequires:  automake,
+BuildRequires:  autoconf
+BuildRequires:  automake
 BuildRequires:  bison
 BuildRequires:  db4-devel
 BuildRequires:  flex
@@ -135,6 +135,7 @@ fi
 %{_moduledir}/pam_wheel.so
 %{_moduledir}/pam_xauth.so
 %{_moduledir}/pam_filter
+%{_moduledir}/pam_mkhomedir.so
 %dir %{_secconfdir}
 %config(noreplace) %{_secconfdir}/access.conf
 %config(noreplace) %{_secconfdir}/group.conf
@@ -161,7 +162,6 @@ fi
 %{_moduledir}/pam_listfile.so
 %{_moduledir}/pam_localuser.so
 %{_moduledir}/pam_mail.so
-%{_moduledir}/pam_mkhomedir.so
 %{_moduledir}/pam_motd.so
 %{_moduledir}/pam_pwhistory.so
 %{_moduledir}/pam_rhosts.so

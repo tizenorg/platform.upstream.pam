@@ -1,3 +1,6 @@
+* Wed Jan 16 2013 Anas Nashif <anas.nashif@intel.com> submit/trunk/20130112.055406@75fb870
+- Move pam_mkhomedir.so to main package, systemd needs it
+
 * Fri Jan 11 2013 Anas Nashif <anas.nashif@intel.com> upstream/1.1.6@7b192f8
 - Update to 1.1.6
 
