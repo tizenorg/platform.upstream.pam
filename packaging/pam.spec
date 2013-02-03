@@ -149,7 +149,6 @@ fi
 %{_pamconfdir}/other
 
 %files -n pam-modules-extra
-%manifest pam.manifest
 %{_moduledir}/pam_access.so
 %{_moduledir}/pam_debug.so
 %{_moduledir}/pam_echo.so
