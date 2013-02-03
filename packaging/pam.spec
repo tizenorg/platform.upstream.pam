@@ -177,7 +177,6 @@ fi
 %{_moduledir}/pam_warn.so
 
 %files devel
-%manifest pam.manifest
 %{_includedir}/security/*
 %{_libdir}/libpam.so
 %{_libdir}/libpam_misc.so
