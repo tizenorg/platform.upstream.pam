@@ -9,7 +9,7 @@ Release:        1
 License:        BSD and GPLv2+ and BSD with advertising
 Summary:        PAM
 Url:            http://www.linux-pam.org/
-Group:          System/Base
+Group:          Security/Access Control
 Source0:        Linux-PAM-%{version}.tar.bz2
 Source1:        system-auth
 Source2:        other
@@ -34,7 +34,7 @@ having to recompile programs that handle authentication.
 
 %package -n pam-modules-extra
 Summary:        Extra modules provided by PAM not used in the base system
-Group:          System/Base
+Group:          Security/Access Control
 Requires:       pam = %{version}
 
 %description -n pam-modules-extra
