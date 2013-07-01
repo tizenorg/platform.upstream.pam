@@ -13,6 +13,7 @@ Group:          Security/Access Control
 Source0:        Linux-PAM-%{version}.tar.bz2
 Source1:        system-auth
 Source2:        other
+Source1001: 	pam.manifest
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -58,6 +59,7 @@ PAM-aware applications and modules for use with PAM.
 
 %prep
 %setup -q -n Linux-PAM-%{version}
+cp %{SOURCE1001} .
 
 libtoolize -f #--copy --force && aclocal && autoheader
 autoreconf
@@ -107,6 +109,7 @@ fi
 
 
 %files
+%manifest %{name}.manifest
 %license Copyright
 %{_sbindir}/pam_tally
 %{_sbindir}/pam_tally2
@@ -149,6 +152,7 @@ fi
 %{_pamconfdir}/other
 
 %files -n pam-modules-extra
+%manifest %{name}.manifest
 %{_moduledir}/pam_access.so
 %{_moduledir}/pam_debug.so
 %{_moduledir}/pam_echo.so
@@ -177,6 +181,7 @@ fi
 %{_moduledir}/pam_warn.so
 
 %files devel
+%manifest %{name}.manifest
 %{_includedir}/security/*
 %{_libdir}/libpam.so
 %{_libdir}/libpam_misc.so
