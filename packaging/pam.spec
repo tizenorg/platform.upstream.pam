@@ -24,6 +24,7 @@ BuildRequires:  gcc
 BuildRequires:  libtool
 BuildRequires:  net-tools
 BuildRequires:  zlib-devel
+BuildRequires:  gettext-tools
 Requires(post): /sbin/ldconfig
 Requires(post): /usr/bin/install
 Requires(postun): /sbin/ldconfig
@@ -72,7 +73,6 @@ CFLAGS="-fPIC %{optflags} " ; export CFLAGS
         --includedir=%{_includedir}/security \
         --enable-isadir=../..%{_moduledir} \
         --disable-audit \
-        --disable-nls \
         --with-db-uniquename=_pam \
         --with-libiconv-prefix=/usr \
         --enable-read-both-confs &&
@@ -96,6 +96,8 @@ install -d -m 0755 %{buildroot}%{_pamconfdir}
 install -m 0644 %{SOURCE1} %{buildroot}%{_pamconfdir}/
 install -m 0644 %{SOURCE2} %{buildroot}%{_pamconfdir}/
 
+%find_lang Linux-PAM
+
 %post
 /sbin/ldconfig
 if [ ! -a /var/log/faillog ] ; then
@@ -107,6 +109,7 @@ fi
 
 %postun -p /sbin/ldconfig
 
+%lang_package -f Linux-PAM
 
 %files
 %manifest %{name}.manifest

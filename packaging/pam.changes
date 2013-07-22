@@ -1,3 +1,6 @@
+* Mon Jul 22 2013 Anas Nashif <anas.nashif@intel.com> accepted/tizen/20130710.215322@b4d6d0b
+- build locale package
+
 * Fri Mar 22 2013 Anas Nashif <anas.nashif@intel.com> submit/trunk/20130203.013415@f3ed55f
 - Fixed package groups
 
