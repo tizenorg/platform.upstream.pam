@@ -48,7 +48,6 @@ default Tizen install.
 
 %package devel
 Summary:        Files needed for developing PAM-aware applications and modules for PAM
-Group:          Development/Libraries
 Requires:       pam = %{version}
 
 %description devel
