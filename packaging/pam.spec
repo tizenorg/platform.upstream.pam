@@ -6,14 +6,14 @@
 Name:           pam
 Version:        1.1.6
 Release:        1
-License:        BSD and GPLv2+ and BSD with advertising
+License:        GPL-2.0+ or BSD-3-Clause
 Summary:        PAM
 Url:            http://www.linux-pam.org/
 Group:          Security/Access Control
 Source0:        Linux-PAM-%{version}.tar.bz2
 Source1:        system-auth
 Source2:        other
-Source1001: 	pam.manifest
+Source1001:     pam.manifest
 
 BuildRequires:  autoconf
 BuildRequires:  automake
