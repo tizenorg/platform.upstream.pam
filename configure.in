@@ -498,6 +498,9 @@ if test ! -z "$LIBSELINUX" ; then
     LIBS=$BACKUP_LIBS
 fi
 
+dnl hacks for pam_smack
+PKG_CHECK_MODULES([LIBSMACK], [libsmack])
+
 dnl Checks for header files.
 AC_HEADER_DIRENT
 AC_HEADER_STDC
@@ -625,6 +628,7 @@ AC_CONFIG_FILES([Makefile libpam/Makefile libpamc/Makefile libpamc/test/Makefile
 	modules/pam_unix/Makefile modules/pam_userdb/Makefile \
 	modules/pam_warn/Makefile modules/pam_wheel/Makefile \
 	modules/pam_xauth/Makefile doc/Makefile doc/specs/Makefile \
+	modules/pam_smack/Makefile \
 	doc/man/Makefile doc/sag/Makefile doc/adg/Makefile \
 	doc/mwg/Makefile examples/Makefile tests/Makefile \
 	xtests/Makefile])

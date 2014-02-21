@@ -25,6 +25,7 @@ BuildRequires:  libtool
 BuildRequires:  net-tools
 BuildRequires:  zlib-devel
 BuildRequires:  gettext-tools
+BuildRequires:  smack-devel
 Requires(post): /sbin/ldconfig
 Requires(post): /usr/bin/install
 Requires(postun): /sbin/ldconfig
@@ -181,6 +182,7 @@ fi
 %{_moduledir}/pam_unix_passwd.so
 %{_moduledir}/pam_unix_session.so
 %{_moduledir}/pam_warn.so
+%{_moduledir}/pam_smack.so
 
 %files devel
 %manifest %{name}.manifest
