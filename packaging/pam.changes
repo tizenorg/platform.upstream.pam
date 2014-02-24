@@ -1,3 +1,7 @@
+* Mon Feb 24 2014 Michael Leibowitz <michael.leibowitz@intel.com> accepted/tizen/ivi/genivi/20140131.034623@e9fdd38
+- Add a pam module to set smack label (PTREL-549)
+- fixed license
+
 * Fri Aug 02 2013 Anas Nashif <anas.nashif@intel.com> submit/tizen/20130802.145428@792be7c
 - fixed license
 
