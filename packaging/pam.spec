@@ -62,13 +62,11 @@ PAM-aware applications and modules for use with PAM.
 %setup -q -n Linux-PAM-%{version}
 cp %{SOURCE1001} .
 
-libtoolize -f #--copy --force && aclocal && autoheader
-autoreconf
 
 %build
 CFLAGS="-fPIC %{optflags} " ; export CFLAGS
 
-%configure \
+%reconfigure \
         --libdir=%{_libdir} \
         --includedir=%{_includedir}/security \
         --enable-isadir=../..%{_moduledir} \
