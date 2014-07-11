@@ -5,9 +5,9 @@
 
 Name:           pam
 Version:        1.1.6
-Release:        1
+Release:        0
 License:        GPL-2.0+ or BSD-3-Clause
-Summary:        PAM
+Summary:        A Security Tool that Provides Authentication for Applications
 Url:            http://www.linux-pam.org/
 Group:          Security/Access Control
 Source0:        Linux-PAM-%{version}.tar.bz2
@@ -38,7 +38,7 @@ having to recompile programs that handle authentication.
 %package -n pam-modules-extra
 Summary:        Extra modules provided by PAM not used in the base system
 Group:          Security/Access Control
-Requires:       pam = %{version}
+Requires:       %{version} = %{version}
 
 %description -n pam-modules-extra
 PAM (Pluggable Authentication Modules) is a system security tool that
@@ -49,7 +49,7 @@ default Tizen install.
 
 %package devel
 Summary:        Files needed for developing PAM-aware applications and modules for PAM
-Requires:       pam = %{version}
+Requires:       %{version} = %{version}
 
 %description devel
 PAM (Pluggable Authentication Modules) is a system security tool that
@@ -62,10 +62,8 @@ PAM-aware applications and modules for use with PAM.
 %setup -q -n Linux-PAM-%{version}
 cp %{SOURCE1001} .
 
-
 %build
 CFLAGS="-fPIC %{optflags} " ; export CFLAGS
-
 %reconfigure \
         --libdir=%{_libdir} \
         --includedir=%{_includedir}/security \
@@ -73,9 +71,8 @@ CFLAGS="-fPIC %{optflags} " ; export CFLAGS
         --disable-audit \
         --with-db-uniquename=_pam \
         --with-libiconv-prefix=/usr \
-        --enable-read-both-confs &&
-
-make %{?_smp_flags} CFLAGS="$CFLAGS -lfl -lcrypt"
+        --enable-read-both-confs 
+%__make %{?_smp_flags} CFLAGS="$CFLAGS -lfl -lcrypt"
 
 %install
 %make_install
@@ -118,11 +115,10 @@ fi
 %attr(4755,root,root) %{_sbindir}/unix_chkpwd
 %attr(0700,root,root) %{_sbindir}/unix_update
 %attr(0755,root,root) %{_sbindir}/mkhomedir_helper
-%{_sysconfdir}/security/limits.conf
+%config %{_sysconfdir}/security/limits.conf
 %{_libdir}/libpam.so.*
 %{_libdir}/libpam_misc.so.*
 %{_libdir}/libpamc.so.*
-%dir %{_moduledir}
 %{_moduledir}/pam_deny.so
 %{_moduledir}/pam_env.so
 %{_moduledir}/pam_keyinit.so
@@ -144,13 +140,12 @@ fi
 %config(noreplace) %{_secconfdir}/access.conf
 %config(noreplace) %{_secconfdir}/group.conf
 %config(noreplace) %{_secconfdir}/namespace.conf
-#%dir %{_secconfdir}/namespace.d
 %attr(755,root,root) %config(noreplace) %{_secconfdir}/namespace.init
 %config(noreplace) %{_secconfdir}/pam_env.conf
 %config(noreplace) %{_secconfdir}/time.conf
 %dir %{_pamconfdir}
-%{_pamconfdir}/system-auth
-%{_pamconfdir}/other
+%config %{_pamconfdir}/system-auth
+%config %{_pamconfdir}/other
 
 %files -n pam-modules-extra
 %manifest %{name}.manifest
