@@ -38,7 +38,7 @@ having to recompile programs that handle authentication.
 %package -n pam-modules-extra
 Summary:        Extra modules provided by PAM not used in the base system
 Group:          Security/Access Control
-Requires:       %{version} = %{version}
+Requires:       %{name} = %{version}
 
 %description -n pam-modules-extra
 PAM (Pluggable Authentication Modules) is a system security tool that
@@ -49,7 +49,7 @@ default Tizen install.
 
 %package devel
 Summary:        Files needed for developing PAM-aware applications and modules for PAM
-Requires:       %{version} = %{version}
+Requires:       %{name} = %{version}
 
 %description devel
 PAM (Pluggable Authentication Modules) is a system security tool that
