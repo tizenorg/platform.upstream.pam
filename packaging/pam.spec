@@ -26,6 +26,7 @@ BuildRequires:  net-tools
 BuildRequires:  zlib-devel
 BuildRequires:  gettext-tools
 BuildRequires:  smack-devel
+BuildRequires:  pkgconfig
 Requires(post): /sbin/ldconfig
 Requires(post): /usr/bin/install
 Requires(postun): /sbin/ldconfig
@@ -83,7 +84,7 @@ rm -rf %{buildroot}%{_datadir}/doc/Linux-PAM
 rm -f %{buildroot}%{_sysconfdir}/environment
 
 for phase in auth acct passwd session ; do
-	ln -sf pam_unix.so %{buildroot}%{_moduledir}/pam_unix_${phase}.so
+    ln -sf pam_unix.so %{buildroot}%{_moduledir}/pam_unix_${phase}.so
 done
 
 # Install default pam configuration files
@@ -96,10 +97,10 @@ install -m 0644 %{SOURCE2} %{buildroot}%{_pamconfdir}/
 %post
 /sbin/ldconfig
 if [ ! -a /var/log/faillog ] ; then
-	/usr/bin/install -m 600 /dev/null /var/log/faillog
+    /usr/bin/install -m 600 /dev/null /var/log/faillog
 fi
 if [ ! -a /var/log/tallylog ] ; then
-	/usr/bin/install -m 600 /dev/null /var/log/tallylog
+    /usr/bin/install -m 600 /dev/null /var/log/tallylog
 fi
 
 %postun -p /sbin/ldconfig
