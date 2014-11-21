@@ -1,5 +1,8 @@
 %define _sbindir /sbin
-%define _moduledir %{_libdir}/security
+%if ! 0%{?_base_libdir:1}
+%define _base_libdir %{_libdir}
+%endif
+%define _moduledir  %{_base_libdir}/security
 %define _secconfdir %{_sysconfdir}/security
 %define _pamconfdir %{_sysconfdir}/pam.d
 
@@ -65,12 +68,12 @@ cp %{SOURCE1001} .
 %build
 CFLAGS="-fPIC %{optflags} " ; export CFLAGS
 %reconfigure \
-        --libdir=%{_libdir} \
+        --libdir=%{_base_libdir} \
         --includedir=%{_includedir}/security \
         --enable-isadir=../..%{_moduledir} \
         --disable-audit \
         --with-db-uniquename=_pam \
-        --with-libiconv-prefix=/usr \
+        --with-libiconv-prefix=%{_prefix} \
         --enable-read-both-confs 
 %__make %{?_smp_flags} CFLAGS="$CFLAGS -lfl -lcrypt"
 
@@ -95,11 +98,11 @@ install -m 0644 %{SOURCE2} %{buildroot}%{_pamconfdir}/
 
 %post
 /sbin/ldconfig
-if [ ! -a /var/log/faillog ] ; then
-	/usr/bin/install -m 600 /dev/null /var/log/faillog
+if [ ! -a %{_localstatedir}/log/faillog ] ; then
+	install -m 600 /dev/null %{_localstatedir}/log/faillog
 fi
-if [ ! -a /var/log/tallylog ] ; then
-	/usr/bin/install -m 600 /dev/null /var/log/tallylog
+if [ ! -a %{_localstatedir}/log/tallylog ] ; then
+	install -m 600 /dev/null %{_localstatedir}/log/tallylog
 fi
 
 %postun -p /sbin/ldconfig
@@ -116,9 +119,9 @@ fi
 %attr(0700,root,root) %{_sbindir}/unix_update
 %attr(0755,root,root) %{_sbindir}/mkhomedir_helper
 %config %{_sysconfdir}/security/limits.conf
-%{_libdir}/libpam.so.*
-%{_libdir}/libpam_misc.so.*
-%{_libdir}/libpamc.so.*
+%{_base_libdir}/libpam.so.*
+%{_base_libdir}/libpam_misc.so.*
+%{_base_libdir}/libpamc.so.*
 %{_moduledir}/pam_deny.so
 %{_moduledir}/pam_env.so
 %{_moduledir}/pam_keyinit.so
@@ -180,9 +183,9 @@ fi
 %files devel
 %manifest %{name}.manifest
 %{_includedir}/security/*
-%{_libdir}/libpam.so
-%{_libdir}/libpam_misc.so
-%{_libdir}/libpamc.so
-%{_libdir}/security/pam_tally2.so
+%{_base_libdir}/libpam.so
+%{_base_libdir}/libpam_misc.so
+%{_base_libdir}/libpamc.so
+%{_moduledir}/pam_tally2.so
 
 %docs_package
