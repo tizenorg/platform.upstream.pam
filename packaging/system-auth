@@ -7,12 +7,10 @@ account     required      pam_unix.so
 
 # cracklib is disabled in the build.
 # password    required      pam_cracklib.so try_first_pass retry=3 type=
-password    optional      pam_key_manager_plugin.so change_step=before
-password    required      pam_unix.so try_first_pass nullok sha512 shadow
-password    optional      pam_key_manager_plugin.so change_step=after
+password    sufficient    pam_unix.so try_first_pass nullok sha512 shadow
+password    required      pam_deny.so
 
 session     optional      pam_keyinit.so revoke
 session     required      pam_limits.so
 session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid
 session     required      pam_unix.so
-session     optional      pam_key_manager_plugin.so
