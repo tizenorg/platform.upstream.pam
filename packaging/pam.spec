@@ -68,6 +68,8 @@ export CFLAGS+=" -fvisibility=hidden"
   export CXXFLAGS+=" -fvisibility=hidden"
   
 CFLAGS="-fPIC %{optflags} " ; export CFLAGS
+export CFLAGS+=" -fvisibility=hidden"
+  export CXXFLAGS+=" -fvisibility=hidden"
 %reconfigure \
         --libdir=%{_libdir} \
         --includedir=%{_includedir}/security \
