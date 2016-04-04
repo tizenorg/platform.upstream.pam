@@ -51,18 +51,18 @@ extern "C" {
 #include <security/_pam_types.h>
 #include <stdarg.h>
 
-extern void PAM_FORMAT((printf, 3, 0)) PAM_NONNULL((3))
+__attribute__ ((visibility ("default"))) extern void PAM_FORMAT((printf, 3, 0)) PAM_NONNULL((3))
 pam_vsyslog (const pam_handle_t *pamh, int priority,
              const char *fmt, va_list args);
 
-extern void PAM_FORMAT((printf, 3, 4)) PAM_NONNULL((3))
+__attribute__ ((visibility ("default"))) extern void PAM_FORMAT((printf, 3, 4)) PAM_NONNULL((3))
 pam_syslog (const pam_handle_t *pamh, int priority, const char *fmt, ...);
 
-extern int PAM_FORMAT((printf, 4, 0)) PAM_NONNULL((1,4))
+__attribute__ ((visibility ("default"))) extern int PAM_FORMAT((printf, 4, 0)) PAM_NONNULL((1,4))
 pam_vprompt (pam_handle_t *pamh, int style, char **response,
 	     const char *fmt, va_list args);
 
-extern int PAM_FORMAT((printf, 4, 5)) PAM_NONNULL((1,4))
+__attribute__ ((visibility ("default"))) extern int PAM_FORMAT((printf, 4, 5)) PAM_NONNULL((1,4))
 pam_prompt (pam_handle_t *pamh, int style, char **response,
 	    const char *fmt, ...);
 
@@ -74,13 +74,13 @@ pam_prompt (pam_handle_t *pamh, int style, char **response,
 #define pam_info(pamh, fmt...) pam_prompt(pamh, PAM_TEXT_INFO, NULL, fmt)
 #define pam_vinfo(pamh, fmt, args) pam_vprompt(pamh, PAM_TEXT_INFO, NULL, fmt, args)
 
-extern int PAM_NONNULL((1,3))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,3))
 pam_get_authtok (pam_handle_t *pamh, int item, const char **authtok,
 		 const char *prompt);
-extern int PAM_NONNULL((1,2))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,2))
 pam_get_authtok_noverify (pam_handle_t *pamh, const char **authtok,
 			  const char *prompt);
-extern int PAM_NONNULL((1,2))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,2))
 pam_get_authtok_verify (pam_handle_t *pamh, const char **authtok,
 			const char *prompt);
 

@@ -33,37 +33,37 @@ typedef struct { u_int32_t length; u_int8_t control; } *pamc_bp_t;
  * Initialize the agent abstraction library
  */
 
-pamc_handle_t pamc_start(void);
+__attribute__ ((visibility ("default"))) pamc_handle_t pamc_start(void);
 
 /*
  * Terminate the authentication process
  */
 
-int pamc_end(pamc_handle_t *pch);
+__attribute__ ((visibility ("default"))) int pamc_end(pamc_handle_t *pch);
 
 /*
  * force the loading of a specified agent
  */
 
-int pamc_load(pamc_handle_t pch, const char *agent_id);
+__attribute__ ((visibility ("default"))) int pamc_load(pamc_handle_t pch, const char *agent_id);
 
 /*
  * Single conversation interface for binary prompts
  */
 
-int pamc_converse(pamc_handle_t pch, pamc_bp_t *prompt_p);
+__attribute__ ((visibility ("default"))) int pamc_converse(pamc_handle_t pch, pamc_bp_t *prompt_p);
 
 /*
  * disable an agent
  */
 
-int pamc_disable(pamc_handle_t pch, const char *agent_id);
+__attribute__ ((visibility ("default"))) int pamc_disable(pamc_handle_t pch, const char *agent_id);
 
 /*
  * obtain a list of available agents
  */
 
-char **pamc_list_agents(pamc_handle_t pch);
+__attribute__ ((visibility ("default"))) char **pamc_list_agents(pamc_handle_t pch);
 
 /*
  * PAM_BP_ MACROS for creating, destroying and manipulating binary prompts

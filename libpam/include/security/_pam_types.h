@@ -168,22 +168,22 @@ typedef struct pam_handle pam_handle_t;
 
 /* ---------- Common Linux-PAM application/module PI ----------- */
 
-extern int PAM_NONNULL((1))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1))
 pam_set_item(pam_handle_t *pamh, int item_type, const void *item);
 
-extern int PAM_NONNULL((1))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1))
 pam_get_item(const pam_handle_t *pamh, int item_type, const void **item);
 
-extern const char *
+__attribute__ ((visibility ("default"))) extern const char *
 pam_strerror(pam_handle_t *pamh, int errnum);
 
-extern int PAM_NONNULL((1,2))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,2))
 pam_putenv(pam_handle_t *pamh, const char *name_value);
 
-extern const char * PAM_NONNULL((1,2))
+__attribute__ ((visibility ("default"))) extern const char * PAM_NONNULL((1,2))
 pam_getenv(pam_handle_t *pamh, const char *name);
 
-extern char ** PAM_NONNULL((1))
+__attribute__ ((visibility ("default"))) extern char ** PAM_NONNULL((1))
 pam_getenvlist(pam_handle_t *pamh);
 
 /* ---------- Common Linux-PAM application/module PI ----------- */
@@ -214,7 +214,7 @@ pam_getenvlist(pam_handle_t *pamh);
  */
 
 #define HAVE_PAM_FAIL_DELAY
-extern int pam_fail_delay(pam_handle_t *pamh, unsigned int musec_delay);
+__attribute__ ((visibility ("default"))) extern int pam_fail_delay(pam_handle_t *pamh, unsigned int musec_delay);
 
 /* ------------ The Linux-PAM conversation structures ------------ */
 

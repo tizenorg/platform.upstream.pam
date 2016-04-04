@@ -58,51 +58,51 @@ extern "C" {
 
 #include <security/_pam_types.h>
 
-extern struct passwd * PAM_NONNULL((1,2))
+__attribute__ ((visibility ("default"))) extern struct passwd * PAM_NONNULL((1,2))
 pam_modutil_getpwnam(pam_handle_t *pamh, const char *user);
 
-extern struct passwd * PAM_NONNULL((1))
+__attribute__ ((visibility ("default"))) extern struct passwd * PAM_NONNULL((1))
 pam_modutil_getpwuid(pam_handle_t *pamh, uid_t uid);
 
-extern struct group  * PAM_NONNULL((1,2))
+__attribute__ ((visibility ("default"))) extern struct group  * PAM_NONNULL((1,2))
 pam_modutil_getgrnam(pam_handle_t *pamh, const char *group);
 
-extern struct group  * PAM_NONNULL((1))
+__attribute__ ((visibility ("default"))) extern struct group  * PAM_NONNULL((1))
 pam_modutil_getgrgid(pam_handle_t *pamh, gid_t gid);
 
-extern struct spwd   * PAM_NONNULL((1,2))
+__attribute__ ((visibility ("default"))) extern struct spwd   * PAM_NONNULL((1,2))
 pam_modutil_getspnam(pam_handle_t *pamh, const char *user);
 
-extern int PAM_NONNULL((1,2,3))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,2,3))
 pam_modutil_user_in_group_nam_nam(pam_handle_t *pamh,
                                   const char *user,
                                   const char *group);
 
-extern int PAM_NONNULL((1,2))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,2))
 pam_modutil_user_in_group_nam_gid(pam_handle_t *pamh,
                                   const char *user,
                                   gid_t group);
 
-extern int PAM_NONNULL((1,3))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,3))
 pam_modutil_user_in_group_uid_nam(pam_handle_t *pamh,
                                   uid_t user,
                                   const char *group);
 
-extern int PAM_NONNULL((1))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1))
 pam_modutil_user_in_group_uid_gid(pam_handle_t *pamh,
                                   uid_t user,
                                   gid_t group);
 
-extern const char * PAM_NONNULL((1))
+__attribute__ ((visibility ("default"))) extern const char * PAM_NONNULL((1))
 pam_modutil_getlogin(pam_handle_t *pamh);
 
-extern int
+__attribute__ ((visibility ("default"))) extern int
 pam_modutil_read(int fd, char *buffer, int count);
 
-extern int
+__attribute__ ((visibility ("default"))) extern int
 pam_modutil_write(int fd, const char *buffer, int count);
 
-extern int PAM_NONNULL((1,3))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,3))
 pam_modutil_audit_write(pam_handle_t *pamh, int type,
 			const char *message, int retval);
 
@@ -120,12 +120,12 @@ struct pam_modutil_privs {
 	gid_t n##_grplist[PAM_MODUTIL_NGROUPS]; \
 	struct pam_modutil_privs n = { n##_grplist, PAM_MODUTIL_NGROUPS, 0, -1, -1, 0 }
 
-extern int PAM_NONNULL((1,2,3))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,2,3))
 pam_modutil_drop_priv(pam_handle_t *pamh,
 		      struct pam_modutil_privs *p,
 		      const struct passwd *pw);
 
-extern int PAM_NONNULL((1,2))
+__attribute__ ((visibility ("default"))) extern int PAM_NONNULL((1,2))
 pam_modutil_regain_priv(pam_handle_t *pamh,
 		      struct pam_modutil_privs *p);
 

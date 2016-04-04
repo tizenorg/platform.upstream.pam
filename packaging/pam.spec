@@ -64,6 +64,9 @@ PAM-aware applications and modules for use with PAM.
 cp %{SOURCE1001} .
 
 %build
+export CFLAGS+=" -fvisibility=hidden"
+  export CXXFLAGS+=" -fvisibility=hidden"
+  
 CFLAGS="-fPIC %{optflags} " ; export CFLAGS
 %reconfigure \
         --libdir=%{_libdir} \
