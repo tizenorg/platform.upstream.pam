@@ -20,7 +20,7 @@ include_HEADERS = include/security/_pam_compat.h \
 noinst_HEADERS = pam_prelude.h pam_private.h pam_tokens.h \
 		pam_modutil_private.h pam_static_modules.h
 
-libpam_la_LDFLAGS = -no-undefined -version-info 83:1:83
+libpam_la_LDFLAGS = -no-undefined -version-info 84:1:84
 libpam_la_LIBADD = @LIBAUDIT@ $(LIBPRELUDE_LIBS) @LIBDL@
 
 if STATIC_MODULES
@@ -43,4 +43,4 @@ libpam_la_SOURCES = pam_account.c pam_auth.c pam_data.c pam_delay.c \
 	pam_modutil_cleanup.c pam_modutil_getpwnam.c pam_modutil_ioloop.c \
 	pam_modutil_getgrgid.c pam_modutil_getpwuid.c pam_modutil_getgrnam.c \
 	pam_modutil_getspnam.c pam_modutil_getlogin.c pam_modutil_ingroup.c \
-	pam_modutil_priv.c
+	pam_modutil_priv.c pam_modutil_sanitize.c

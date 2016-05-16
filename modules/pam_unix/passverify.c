@@ -377,6 +377,9 @@ PAMH_ARG_DECL(char * create_password_hash,
 	const char *algoid;
 	char salt[64]; /* contains rounds number + max 16 bytes of salt + algo id */
 	char *sp;
+#ifdef HAVE_CRYPT_R
+	struct crypt_data *cdata = NULL;
+#endif
 
 	if (on(UNIX_MD5_PASS, ctrl)) {
 		/* algoid = "$1" */
@@ -423,7 +426,16 @@ PAMH_ARG_DECL(char * create_password_hash,
 #ifdef HAVE_CRYPT_GENSALT_R
 	}
 #endif
+#ifdef HAVE_CRYPT_R
+	sp = NULL;
+	cdata = malloc(sizeof(*cdata));
+	if (cdata != NULL) {
+		cdata->initialized = 0;
+		sp = crypt_r(password, salt, cdata);
+	}
+#else
 	sp = crypt(password, salt);
+#endif
 	if (!sp || strncmp(algoid, sp, strlen(algoid)) != 0) {
 		/* libxcrypt/libc doesn't know the algorithm, use MD5 */
 		pam_syslog(pamh, LOG_ERR,
@@ -435,10 +447,16 @@ PAMH_ARG_DECL(char * create_password_hash,
 		if(sp) {
 		   memset(sp, '\0', strlen(sp));
 		}
+#ifdef HAVE_CRYPT_R
+		free(cdata);
+#endif
 		return crypt_md5_wrapper(password);
 	}
-
-	return x_strdup(sp);
+	sp = x_strdup(sp);
+#ifdef HAVE_CRYPT_R
+	free(cdata);
+#endif
+	return sp;
 }
 
 #ifdef WITH_SELINUX
@@ -639,11 +657,23 @@ save_old_password(pam_handle_t *pamh, const char *forwho, const char *oldpass,
 		continue;
 	    buf[strlen(buf) - 1] = '\0';
 	    s_luser = strtok_r(buf, ":", &sptr);
+	    if (s_luser == NULL) {
+		found = 0;
+		continue;
+	    }
 	    s_uid = strtok_r(NULL, ":", &sptr);
+	    if (s_uid == NULL) {
+		found = 0;
+		continue;
+	    }
 	    s_npas = strtok_r(NULL, ":", &sptr);
+	    if (s_npas == NULL) {
+		found = 0;
+		continue;
+	    }
 	    s_pas = strtok_r(NULL, ":", &sptr);
 	    npas = strtol(s_npas, NULL, 10) + 1;
-	    while (npas > howmany) {
+	    while (npas > howmany && s_pas != NULL) {
 		s_pas = strpbrk(s_pas, ",");
 		if (s_pas != NULL)
 		    s_pas++;
@@ -1085,12 +1115,15 @@ getuidname(uid_t uid)
 int
 read_passwords(int fd, int npass, char **passwords)
 {
+        /* The passwords array must contain npass preallocated
+         * buffers of length MAXPASS + 1
+         */
         int rbytes = 0;
         int offset = 0;
         int i = 0;
         char *pptr;
         while (npass > 0) {
-                rbytes = read(fd, passwords[i]+offset, MAXPASS-offset);
+                rbytes = read(fd, passwords[i]+offset, MAXPASS+1-offset);
 
                 if (rbytes < 0) {
                         if (errno == EINTR) continue;

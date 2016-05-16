@@ -36,6 +36,7 @@
    USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
    DAMAGE. */
 
+#include "config.h"
 #include <errno.h>
 #include <fnmatch.h>
 #include <stdlib.h>
@@ -108,7 +109,7 @@ nl_recv (int fd, unsigned type, void *buf, size_t size)
   struct msghdr msg;
   struct nlmsghdr nlm;
   struct iovec iov[2];
-  ssize_t res;
+  ssize_t res, resdiff;
 
  again:
   iov[0].iov_base = &nlm;
@@ -119,6 +120,7 @@ nl_recv (int fd, unsigned type, void *buf, size_t size)
   msg.msg_iovlen = 1;
   msg.msg_control = NULL;
   msg.msg_controllen = 0;
+  msg.msg_flags = 0;
   if (type != NLMSG_ERROR)
     {
       res = recvmsg (fd, &msg, MSG_PEEK);
@@ -160,11 +162,16 @@ nl_recv (int fd, unsigned type, void *buf, size_t size)
   res = recvmsg (fd, &msg, 0);
   if (res == -1)
     return -1;
-  if ((size_t)res != NLMSG_LENGTH (size)
+  resdiff = NLMSG_LENGTH(size) - (size_t)res;
+  if (resdiff < 0
       || nlm.nlmsg_type != type)
     {
       errno = EIO;
       return -1;
+    }
+  else if (resdiff > 0)
+    {
+      memset((char *)buf + size - resdiff, 0, resdiff);
     }
   return 0;
 }
@@ -201,6 +208,9 @@ pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char **argv)
   struct audit_tty_status *old_status, new_status;
   const char *user;
   int i, fd, open_only;
+#ifdef HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD
+  int log_passwd;
+#endif /* HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD */
 
   (void)flags;
 
@@ -212,6 +222,9 @@ pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char **argv)
 
   command = CMD_NONE;
   open_only = 0;
+#ifdef HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD
+  log_passwd = 0;
+#endif /* HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD */
   for (i = 0; i < argc; i++)
     {
       if (strncmp (argv[i], "enable=", 7) == 0
@@ -237,6 +250,14 @@ pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char **argv)
 	}
       else if (strcmp (argv[i], "open_only") == 0)
 	open_only = 1;
+      else if (strcmp (argv[i], "log_passwd") == 0)
+#ifdef HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD
+        log_passwd = 1;
+#else /* HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD */
+        pam_syslog (pamh, LOG_WARNING,
+                    "The log_passwd option was not available at compile time.");
+#warning "pam_tty_audit: The log_passwd option is not available.  Please upgrade your headers/kernel."
+#endif /* HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD */
       else
 	{
 	  pam_syslog (pamh, LOG_ERR, "unknown option `%s'", argv[i]);
@@ -261,8 +282,17 @@ pam_sm_open_session (pam_handle_t *pamh, int flags, int argc, const char **argv)
       return PAM_SESSION_ERR;
     }
 
+  memcpy(&new_status, old_status, sizeof(new_status));
+
   new_status.enabled = (command == CMD_ENABLE ? 1 : 0);
-  if (old_status->enabled == new_status.enabled)
+#ifdef HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD
+  new_status.log_passwd = log_passwd;
+#endif /* HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD */
+  if (old_status->enabled == new_status.enabled
+#ifdef HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD
+      && old_status->log_passwd == new_status.log_passwd
+#endif /* HAVE_STRUCT_AUDIT_TTY_STATUS_LOG_PASSWD */
+     )
     {
       open_only = 1; /* to clean up old_status */
       goto ok_fd;

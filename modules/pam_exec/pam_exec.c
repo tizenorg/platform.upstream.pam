@@ -72,6 +72,24 @@ static struct {
   ENV_ITEM(PAM_RUSER),
 };
 
+/* move_fd_to_non_stdio copies the given file descriptor to something other
+ * than stdin, stdout, or stderr.  Assumes that the caller will close all
+ * unwanted fds after calling. */
+static int
+move_fd_to_non_stdio (pam_handle_t *pamh, int fd)
+{
+  while (fd < 3)
+    {
+      fd = dup(fd);
+      if (fd == -1)
+	{
+	  int err = errno;
+	  pam_syslog (pamh, LOG_ERR, "dup failed: %m");
+	  _exit (err);
+	}
+    }
+  return fd;
+}
 
 static int
 call_exec (const char *pam_type, pam_handle_t *pamh,
@@ -81,11 +99,14 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
   int call_setuid = 0;
   int quiet = 0;
   int expose_authtok = 0;
+  int use_stdout = 0;
   int optargc;
   const char *logfile = NULL;
   const char *authtok = NULL;
   pid_t pid;
   int fds[2];
+  int stdout_fds[2];
+  FILE *stdout_file = NULL;
 
   if (argc < 1) {
     pam_syslog (pamh, LOG_ERR,
@@ -100,8 +121,15 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
 
       if (strcasecmp (argv[optargc], "debug") == 0)
 	debug = 1;
+      else if (strcasecmp (argv[optargc], "stdout") == 0)
+	use_stdout = 1;
       else if (strncasecmp (argv[optargc], "log=", 4) == 0)
 	logfile = &argv[optargc][4];
+      else if (strncasecmp (argv[optargc], "type=", 5) == 0)
+	{
+	  if (strcmp (pam_type, &argv[optargc][5]) != 0)
+	    return PAM_IGNORE;
+	}
       else if (strcasecmp (argv[optargc], "seteuid") == 0)
 	call_setuid = 1;
       else if (strcasecmp (argv[optargc], "quiet") == 0)
@@ -150,17 +178,32 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
 		}
 
 	      pam_set_item (pamh, PAM_AUTHTOK, resp);
-	      authtok = strdupa (resp);
+	      authtok = strndupa (resp, PAM_MAX_RESP_SIZE);
 	      _pam_drop (resp);
 	    }
 	  else
-	    authtok = void_pass;
+	    authtok = strndupa (void_pass, PAM_MAX_RESP_SIZE);
 
 	  if (pipe(fds) != 0)
 	    {
 	      pam_syslog (pamh, LOG_ERR, "Could not create pipe: %m");
 	      return PAM_SYSTEM_ERR;
 	    }
+	}
+    }
+
+  if (use_stdout)
+    {
+      if (pipe(stdout_fds) != 0)
+	{
+	  pam_syslog (pamh, LOG_ERR, "Could not create pipe: %m");
+	  return PAM_SYSTEM_ERR;
+	}
+      stdout_file = fdopen(stdout_fds[0], "r");
+      if (!stdout_file)
+	{
+	  pam_syslog (pamh, LOG_ERR, "Could not fdopen pipe: %m");
+	  return PAM_SYSTEM_ERR;
 	}
     }
 
@@ -196,6 +239,21 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
 	    }
         close(fds[0]);       /* close here to avoid possible SIGPIPE above */
         close(fds[1]);
+	}
+
+      if (use_stdout)
+	{
+	  char buf[4096];
+	  close(stdout_fds[1]);
+	  while (fgets(buf, sizeof(buf), stdout_file) != NULL)
+	    {
+	      size_t len;
+	      len = strlen(buf);
+	      if (buf[len-1] == '\n')
+		buf[len-1] = '\0';
+	      pam_info(pamh, "%s", buf);
+	    }
+	  fclose(stdout_file);
 	}
 
       while ((retval = waitpid (pid, &status, 0)) == -1 &&
@@ -244,6 +302,27 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
       char **envlist, **tmp;
       int envlen, nitems;
       char *envstr;
+      enum pam_modutil_redirect_fd redirect_stdin =
+	      expose_authtok ? PAM_MODUTIL_IGNORE_FD : PAM_MODUTIL_PIPE_FD;
+      enum pam_modutil_redirect_fd redirect_stdout =
+	      (use_stdout || logfile) ? PAM_MODUTIL_IGNORE_FD : PAM_MODUTIL_NULL_FD;
+
+      /* First, move all the pipes off of stdin, stdout, and stderr, to ensure
+       * that calls to dup2 won't close them. */
+
+      if (expose_authtok)
+	{
+	  fds[0] = move_fd_to_non_stdio(pamh, fds[0]);
+	  close(fds[1]);
+	}
+
+      if (use_stdout)
+	{
+	  stdout_fds[1] = move_fd_to_non_stdio(pamh, stdout_fds[1]);
+	  close(stdout_fds[0]);
+	}
+
+      /* Set up stdin. */
 
       if (expose_authtok)
 	{
@@ -254,33 +333,25 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
 	      pam_syslog (pamh, LOG_ERR, "dup2 of STDIN failed: %m");
 	      _exit (err);
 	    }
-
-	  for (i = 0; i < sysconf (_SC_OPEN_MAX); i++)
-	    {
-	      if (i != STDIN_FILENO)
-		close (i);
-	    }
 	}
-      else
-	{
-	  for (i = 0; i < sysconf (_SC_OPEN_MAX); i++)
-	    close (i);
 
-	  /* New stdin.  */
-	  if ((i = open ("/dev/null", O_RDWR)) < 0)
+      /* Set up stdout. */
+
+      if (use_stdout)
+	{
+	  if (dup2(stdout_fds[1], STDOUT_FILENO) == -1)
 	    {
 	      int err = errno;
-	      pam_syslog (pamh, LOG_ERR, "open of /dev/null failed: %m");
+	      pam_syslog (pamh, LOG_ERR, "dup2 to stdout failed: %m");
 	      _exit (err);
 	    }
 	}
-
-      /* New stdout and stderr.  */
-      if (logfile)
+      else if (logfile)
 	{
 	  time_t tm = time (NULL);
 	  char *buffer = NULL;
 
+	  close (STDOUT_FILENO);
 	  if ((i = open (logfile, O_CREAT|O_APPEND|O_WRONLY,
 			 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)) == -1)
 	    {
@@ -289,29 +360,34 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
 			  logfile);
 	      _exit (err);
 	    }
+	  if (i != STDOUT_FILENO)
+	    {
+	      if (dup2 (i, STDOUT_FILENO) == -1)
+		{
+		  int err = errno;
+		  pam_syslog (pamh, LOG_ERR, "dup2 failed: %m");
+		  _exit (err);
+		}
+	      close (i);
+	    }
 	  if (asprintf (&buffer, "*** %s", ctime (&tm)) > 0)
 	    {
-	      pam_modutil_write (i, buffer, strlen (buffer));
+	      pam_modutil_write (STDOUT_FILENO, buffer, strlen (buffer));
 	      free (buffer);
 	    }
 	}
-      else
-	{
-	  /* New stdout/stderr.  */
-	  if ((i = open ("/dev/null", O_RDWR)) < 0)
-	    {
-	      int err = errno;
-	      pam_syslog (pamh, LOG_ERR, "open of /dev/null failed: %m");
-	      _exit (err);
-	    }
-	}
 
-      if (dup (i) == -1)
+      if ((use_stdout || logfile) &&
+	  dup2 (STDOUT_FILENO, STDERR_FILENO) == -1)
 	{
 	  int err = errno;
-	  pam_syslog (pamh, LOG_ERR, "dup failed: %m");
+	  pam_syslog (pamh, LOG_ERR, "dup2 failed: %m");
 	  _exit (err);
 	}
+
+      if (pam_modutil_sanitize_helper_fds(pamh, redirect_stdin,
+					  redirect_stdout, redirect_stdout) < 0)
+	_exit(1);
 
       if (call_setuid)
 	if (setuid (geteuid ()) == -1)

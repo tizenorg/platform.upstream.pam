@@ -3,22 +3,23 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Ankit Patel <ankit@redhat.com>, 2007, 2008.
-# Sweta Kothari <swkothar@redhat.com>, 2009, 2010.
-#   <swkothar@redhat.com>, 2012.
+# Ankit Patel <ankit@redhat.com>, 2007-2008
+# sweta <swkothar@redhat.com>, 2009-2010
+# sweta <swkothar@redhat.com>, 2013
+# sweta <swkothar@redhat.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Linux-PAM\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/projects/pam\n"
-"POT-Creation-Date: 2012-08-17 11:35+0200\n"
-"PO-Revision-Date: 2012-02-15 06:10+0000\n"
+"POT-Creation-Date: 2015-06-22 14:16+0200\n"
+"PO-Revision-Date: 2013-04-15 12:16+0000\n"
 "Last-Translator: sweta <swkothar@redhat.com>\n"
 "Language-Team: Gujarati <trans-gu@lists.fedoraproject.org>\n"
+"Language: gu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: gu\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: libpam_misc/misc_conv.c:33
 msgid "...Time is running out...\n"
@@ -28,12 +29,12 @@ msgstr "...સમય ચાલ્યો જઈ રહ્યો છે...\n"
 msgid "...Sorry, your time is up!\n"
 msgstr "...માફ કરજો, તમારો સમય સમાપ્ત થયો!\n"
 
-#: libpam_misc/misc_conv.c:342
+#: libpam_misc/misc_conv.c:346
 #, c-format
 msgid "erroneous conversation (%d)\n"
 msgstr "ક્ષતિયુક્ત વાર્તાલાપ (%d)\n"
 
-#: libpam/pam_get_authtok.c:39 modules/pam_exec/pam_exec.c:142
+#: libpam/pam_get_authtok.c:39 modules/pam_exec/pam_exec.c:170
 #: modules/pam_unix/pam_unix_auth.c:160 modules/pam_userdb/pam_userdb.c:64
 msgid "Password: "
 msgstr "પાસવર્ડ: "
@@ -52,12 +53,12 @@ msgstr "નવો %s%sપાસવર્ડ ફરી લખો: "
 msgid "Sorry, passwords do not match."
 msgstr "માફ કરજો, પાસવર્ડો બંધબેસતા નથી."
 
-#: libpam/pam_get_authtok.c:135 libpam/pam_get_authtok.c:211
+#: libpam/pam_get_authtok.c:135 libpam/pam_get_authtok.c:212
 #, c-format
 msgid "Retype %s"
 msgstr "%s ને પુન:ટાઇપ કરો"
 
-#: libpam/pam_get_authtok.c:155 libpam/pam_get_authtok.c:227
+#: libpam/pam_get_authtok.c:156 libpam/pam_get_authtok.c:228
 msgid "Password change aborted."
 msgstr "પાસવર્ડ બદલાવનો અંત આવેલ છે."
 
@@ -236,21 +237,20 @@ msgid "contains too many same characters consecutively"
 msgstr "એકપછી એક ઘણા બધા સરખા અક્ષરોને સમાવે છે"
 
 #: modules/pam_cracklib/pam_cracklib.c:664
-#, fuzzy
 msgid "contains too long of a monotonic character sequence"
-msgstr "એકપછી એક ઘણા બધા સરખા અક્ષરોને સમાવે છે"
+msgstr "મૉનોટોનિક અક્ષર ક્રમ ઘણો લાંબો સમાવે છે"
 
 #: modules/pam_cracklib/pam_cracklib.c:667
 msgid "contains the user name in some form"
 msgstr "અમુક ફોર્મમાં વપરાશકર્તા નામ ને સમાવે છે"
 
 #: modules/pam_cracklib/pam_cracklib.c:701
-#: modules/pam_unix/pam_unix_passwd.c:494
+#: modules/pam_unix/pam_unix_passwd.c:501
 msgid "No password supplied"
 msgstr "કોઈ પાસવર્ડ પૂરો પડાયેલ નથી"
 
 #: modules/pam_cracklib/pam_cracklib.c:701
-#: modules/pam_unix/pam_unix_passwd.c:494
+#: modules/pam_unix/pam_unix_passwd.c:501
 msgid "Password unchanged"
 msgstr "પાસવર્ડ બદલાયેલ નથી"
 
@@ -260,34 +260,34 @@ msgstr "પાસવર્ડ બદલાયેલ નથી"
 msgid "BAD PASSWORD: %s"
 msgstr "ખરાબ પાસવર્ડ: %s"
 
-#: modules/pam_exec/pam_exec.c:215
+#: modules/pam_exec/pam_exec.c:273
 #, c-format
 msgid "%s failed: exit code %d"
 msgstr "%s નિષ્ફળ: બહાર નીકળ્યાનો કોડ %d"
 
-#: modules/pam_exec/pam_exec.c:224
+#: modules/pam_exec/pam_exec.c:282
 #, c-format
 msgid "%s failed: caught signal %d%s"
 msgstr "%s નિષ્ફળ: મળેલ સંકેત %d%s"
 
-#: modules/pam_exec/pam_exec.c:233
+#: modules/pam_exec/pam_exec.c:291
 #, c-format
 msgid "%s failed: unknown status 0x%x"
 msgstr "%s નિષ્ફળ: અજ્ઞાત પરિસ્થિતિ 0x%x"
 
 #. TRANSLATORS: "strftime options for date of last login"
-#: modules/pam_lastlog/pam_lastlog.c:282 modules/pam_lastlog/pam_lastlog.c:492
+#: modules/pam_lastlog/pam_lastlog.c:282 modules/pam_lastlog/pam_lastlog.c:496
 msgid " %a %b %e %H:%M:%S %Z %Y"
 msgstr " %a %b %e %H:%M:%S %Z %Y"
 
 #. TRANSLATORS: " from <host>"
-#: modules/pam_lastlog/pam_lastlog.c:291 modules/pam_lastlog/pam_lastlog.c:501
+#: modules/pam_lastlog/pam_lastlog.c:291 modules/pam_lastlog/pam_lastlog.c:505
 #, c-format
 msgid " from %.*s"
 msgstr " %.*s તરફથી"
 
 #. TRANSLATORS: " on <terminal>"
-#: modules/pam_lastlog/pam_lastlog.c:303 modules/pam_lastlog/pam_lastlog.c:513
+#: modules/pam_lastlog/pam_lastlog.c:303 modules/pam_lastlog/pam_lastlog.c:517
 #, c-format
 msgid " on %.*s"
 msgstr " %.*s પર"
@@ -303,12 +303,12 @@ msgid "Welcome to your new account!"
 msgstr "તમારા નવા ખાતામાં તમારું સ્વાગત છે!"
 
 #. TRANSLATORS: "Last failed login: <date> from <host> on <terminal>"
-#: modules/pam_lastlog/pam_lastlog.c:523
+#: modules/pam_lastlog/pam_lastlog.c:527
 #, c-format
 msgid "Last failed login:%s%s%s"
 msgstr "છેલ્લો નિષ્ફળ થયેલ પ્રવેશ:%s%s%s"
 
-#: modules/pam_lastlog/pam_lastlog.c:532 modules/pam_lastlog/pam_lastlog.c:539
+#: modules/pam_lastlog/pam_lastlog.c:536 modules/pam_lastlog/pam_lastlog.c:543
 #, c-format
 msgid "There was %d failed login attempt since the last successful login."
 msgid_plural ""
@@ -317,12 +317,12 @@ msgstr[0] "છેલ્લે સફળ પ્રવેશ સુધી પ્�
 msgstr[1] "છેલ્લે સફળ પ્રવેશ સુધી પ્રવેશનો પ્રયત્નો કરવામાં %d નિષ્ફળ થયેલ હતુ."
 
 #. TRANSLATORS: only used if dngettext is not supported
-#: modules/pam_lastlog/pam_lastlog.c:544
+#: modules/pam_lastlog/pam_lastlog.c:548
 #, c-format
 msgid "There were %d failed login attempts since the last successful login."
 msgstr "છેલ્લે સફળ પ્રવેશ સુધી પ્રવેશનાં પ્રયત્નો કરવામાં %d નિષ્ફળ થયેલ હતુ."
 
-#: modules/pam_limits/pam_limits.c:1079
+#: modules/pam_limits/pam_limits.c:1091
 #, c-format
 msgid "Too many logins for '%s'."
 msgstr "'%s' માટે ઘણા બધા પ્રવેશો."
@@ -363,67 +363,62 @@ msgstr "તમારી પાસે ફોલ્ડર %s માં જૂન�
 msgid "You have mail in folder %s."
 msgstr "તમારી પાસે ફોલ્ડર %s માં મેઈલ છે."
 
-#: modules/pam_mkhomedir/pam_mkhomedir.c:113
+#: modules/pam_mkhomedir/pam_mkhomedir.c:111
 #, c-format
 msgid "Creating directory '%s'."
 msgstr "ડિરેક્ટરી '%s' બનાવી રહ્યા છીએ."
 
-#: modules/pam_mkhomedir/pam_mkhomedir.c:183
+#: modules/pam_mkhomedir/pam_mkhomedir.c:176
 #, c-format
 msgid "Unable to create and initialize directory '%s'."
 msgstr "ડિરેક્ટરી '%s' ને શરૂ કરવામાં અને બનાવવામાં અસમર્થ."
 
 #: modules/pam_pwhistory/pam_pwhistory.c:217
-#: modules/pam_unix/pam_unix_passwd.c:515
+#: modules/pam_unix/pam_unix_passwd.c:522
 msgid "Password has been already used. Choose another."
 msgstr "પાસવર્ડ પહેલાથી જ વપરાઈ ગયેલ છે. બીજો પસંદ કરો."
 
 #: modules/pam_pwhistory/pam_pwhistory.c:224
-#, fuzzy
 msgid "Password has been already used."
-msgstr "પાસવર્ડ પહેલાથી જ વપરાઈ ગયેલ છે. બીજો પસંદ કરો."
+msgstr "પાસવર્ડને વાપરી દેવામાં આવ્યો છે."
 
-#: modules/pam_selinux/pam_selinux.c:172
-msgid "Would you like to enter a security context? [N] "
-msgstr "શું તમે સુરક્ષા સંદર્ભ દાખલ કરવા ઈચ્છો છો? [N] "
-
-#: modules/pam_selinux/pam_selinux.c:191 modules/pam_selinux/pam_selinux.c:299
-msgid "role:"
-msgstr "ભૂમિકા:"
-
-#: modules/pam_selinux/pam_selinux.c:205 modules/pam_selinux/pam_selinux.c:334
-msgid "level:"
-msgstr "સ્તર:"
-
-#: modules/pam_selinux/pam_selinux.c:220 modules/pam_selinux/pam_selinux.c:367
-msgid "Not a valid security context"
-msgstr "માન્ય સુરક્ષા સંદર્ભ નથી"
-
-#: modules/pam_selinux/pam_selinux.c:282
+#: modules/pam_selinux/pam_selinux.c:210
 #, c-format
 msgid "Default Security Context %s\n"
 msgstr "મૂળભૂત સુરક્ષા સંદર્ભ %s\n"
 
-#: modules/pam_selinux/pam_selinux.c:286
+#: modules/pam_selinux/pam_selinux.c:214
 msgid "Would you like to enter a different role or level?"
 msgstr "શું તમે અલગ ભૂમિકા કે સ્તર દાખલ કરવા ઈચ્છો છો?"
 
-#: modules/pam_selinux/pam_selinux.c:302
+#: modules/pam_selinux/pam_selinux.c:227
+msgid "role:"
+msgstr "ભૂમિકા:"
+
+#: modules/pam_selinux/pam_selinux.c:230
 #, c-format
 msgid "No default type for role %s\n"
 msgstr "ભૂમિકા %s માટે કોઈ મૂળભૂત પ્રકાર નથી\n"
 
-#: modules/pam_selinux/pam_selinux.c:616
+#: modules/pam_selinux/pam_selinux.c:262
+msgid "level:"
+msgstr "સ્તર:"
+
+#: modules/pam_selinux/pam_selinux.c:295
+msgid "Not a valid security context"
+msgstr "માન્ય સુરક્ષા સંદર્ભ નથી"
+
+#: modules/pam_selinux/pam_selinux.c:544
 #, c-format
 msgid "Unable to get valid context for %s"
 msgstr "%s માટે માન્ય સંદર્ભ મેળવવામાં અસમર્થ"
 
-#: modules/pam_selinux/pam_selinux.c:735
+#: modules/pam_selinux/pam_selinux.c:663
 #, c-format
 msgid "Security Context %s Assigned"
 msgstr "સુરક્ષા સંદર્ભ %s સોંપાયેલ"
 
-#: modules/pam_selinux/pam_selinux.c:751
+#: modules/pam_selinux/pam_selinux.c:679
 #, c-format
 msgid "Key Creation Context %s Assigned"
 msgstr "કી બનાવટ સંદર્ભ %s સોંપાયેલ"
@@ -524,24 +519,24 @@ msgstr ""
 "   [-u username] [--user username]\n"
 "   [-r] [--reset[=n]] [--quiet]\n"
 
-#: modules/pam_timestamp/pam_timestamp.c:345
+#: modules/pam_timestamp/pam_timestamp.c:357
 #, c-format
 msgid "Access granted (last access was %ld seconds ago)."
 msgstr "પ્રવેશની મંજૂરી આપેલ છે (છેલ્લો પ્રવેશ એ %ld સેકંડો પહેલા હતો)."
 
-#: modules/pam_unix/pam_unix_acct.c:241 modules/pam_unix/pam_unix_acct.c:263
+#: modules/pam_unix/pam_unix_acct.c:244 modules/pam_unix/pam_unix_acct.c:266
 msgid "Your account has expired; please contact your system administrator"
 msgstr "તમારું ખાતું નિવૃત્ત થઈ ગયું છે; મહેરબાની કરીને તમારા સિસ્ટમ સંચાલકનો સંપર્ક કરો"
 
-#: modules/pam_unix/pam_unix_acct.c:249
+#: modules/pam_unix/pam_unix_acct.c:252
 msgid "You are required to change your password immediately (root enforced)"
 msgstr "તમારે તમારો પાસવર્ડ તુરંત જ બદલવાની જરૂર છે (root દબાણ કરેલ)"
 
-#: modules/pam_unix/pam_unix_acct.c:255
+#: modules/pam_unix/pam_unix_acct.c:258
 msgid "You are required to change your password immediately (password aged)"
 msgstr "તમારે તમારો પાસવર્ડ તુરંત જ બદલવાની જરૂર છે (પાસવર્ડ વયમર્યાદિત કરાયેલ)"
 
-#: modules/pam_unix/pam_unix_acct.c:276 modules/pam_unix/pam_unix_acct.c:283
+#: modules/pam_unix/pam_unix_acct.c:279 modules/pam_unix/pam_unix_acct.c:286
 #, c-format
 msgid "Warning: your password will expire in %d day"
 msgid_plural "Warning: your password will expire in %d days"
@@ -549,36 +544,36 @@ msgstr[0] "ચેતવણી: તમારો પાસવર્ડ %d દિ�
 msgstr[1] "ચેતવણી: તમારો પાસવર્ડ %d દિવસોમાં નિવૃત્ત થઈ જશે"
 
 #. TRANSLATORS: only used if dngettext is not supported
-#: modules/pam_unix/pam_unix_acct.c:288
+#: modules/pam_unix/pam_unix_acct.c:291
 #, c-format
 msgid "Warning: your password will expire in %d days"
 msgstr "ચેતવણી: તમારો પાસવર્ડ %d દિવસોમાં નિવૃત્ત થઈ જશે"
 
-#: modules/pam_unix/pam_unix_passwd.c:396
+#: modules/pam_unix/pam_unix_passwd.c:403
 msgid "NIS password could not be changed."
 msgstr "NIS પાસવર્ડ બદલી શક્યા નહિં."
 
-#: modules/pam_unix/pam_unix_passwd.c:511
+#: modules/pam_unix/pam_unix_passwd.c:518
 msgid "You must choose a longer password"
 msgstr "તમારે લાંબો પાસવર્ડ જ પસંદ કરવો જોઈએ"
 
-#: modules/pam_unix/pam_unix_passwd.c:617
+#: modules/pam_unix/pam_unix_passwd.c:625
 #, c-format
 msgid "Changing password for %s."
 msgstr "%s માટે પાસવર્ડ બદલવાનું."
 
-#: modules/pam_unix/pam_unix_passwd.c:628
+#: modules/pam_unix/pam_unix_passwd.c:636
 msgid "(current) UNIX password: "
 msgstr "(વર્તમાન) UNIX પાસવર્ડ: "
 
-#: modules/pam_unix/pam_unix_passwd.c:663
+#: modules/pam_unix/pam_unix_passwd.c:671
 msgid "You must wait longer to change your password"
 msgstr "તમારો પાસવર્ડ બદલવા માટે તમારે લાંબો સમય રાહ જોવી જ પડશે"
 
-#: modules/pam_unix/pam_unix_passwd.c:723
+#: modules/pam_unix/pam_unix_passwd.c:731
 msgid "Enter new UNIX password: "
 msgstr "નવો UNIX પાસવર્ડ દાખલ કરો: "
 
-#: modules/pam_unix/pam_unix_passwd.c:724
+#: modules/pam_unix/pam_unix_passwd.c:732
 msgid "Retype new UNIX password: "
 msgstr "નવો UNIX પાસવર્ડ ફરીથી લખો: "

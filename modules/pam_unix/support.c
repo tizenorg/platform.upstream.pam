@@ -37,6 +37,80 @@
 #define SELINUX_ENABLED 0
 #endif
 
+static char *
+search_key (const char *key, const char *filename)
+{
+  FILE *fp;
+  char *buf = NULL;
+  size_t buflen = 0;
+  char *retval = NULL;
+
+  fp = fopen (filename, "r");
+  if (NULL == fp)
+    return NULL;
+
+  while (!feof (fp))
+    {
+      char *tmp, *cp;
+#if defined(HAVE_GETLINE)
+      ssize_t n = getline (&buf, &buflen, fp);
+#elif defined (HAVE_GETDELIM)
+      ssize_t n = getdelim (&buf, &buflen, '\n', fp);
+#else
+      ssize_t n;
+
+      if (buf == NULL)
+        {
+          buflen = BUF_SIZE;
+          buf = malloc (buflen);
+	  if (buf == NULL) {
+	    fclose (fp);
+	    return NULL;
+	  }
+        }
+      buf[0] = '\0';
+      if (fgets (buf, buflen - 1, fp) == NULL)
+        break;
+      else if (buf != NULL)
+        n = strlen (buf);
+      else
+        n = 0;
+#endif /* HAVE_GETLINE / HAVE_GETDELIM */
+      cp = buf;
+
+      if (n < 1)
+        break;
+
+      tmp = strchr (cp, '#');  /* remove comments */
+      if (tmp)
+        *tmp = '\0';
+      while (isspace ((int)*cp))    /* remove spaces and tabs */
+        ++cp;
+      if (*cp == '\0')        /* ignore empty lines */
+        continue;
+
+      if (cp[strlen (cp) - 1] == '\n')
+        cp[strlen (cp) - 1] = '\0';
+
+      tmp = strsep (&cp, " \t=");
+      if (cp != NULL)
+        while (isspace ((int)*cp) || *cp == '=')
+          ++cp;
+
+      if (strcasecmp (tmp, key) == 0)
+        {
+          retval = strdup (cp);
+          break;
+        }
+    }
+  fclose (fp);
+
+  free (buf);
+
+  return retval;
+}
+
+
 /* this is a front-end for module-application conversations */
 
 int _make_remark(pam_handle_t * pamh, unsigned int ctrl,
@@ -58,6 +132,8 @@ int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int *rounds,
 	      int *pass_min_len, int argc, const char **argv)
 {
 	unsigned int ctrl;
+	char *val;
+	int j;
 
 	D(("called."));
 
@@ -81,10 +157,38 @@ int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int *rounds,
 		D(("SILENT"));
 		set(UNIX__QUIET, ctrl);
 	}
+
+	/* preset encryption method with value from /etc/login.defs */
+	val = search_key ("ENCRYPT_METHOD", LOGIN_DEFS);
+	if (val) {
+	  for (j = 0; j < UNIX_CTRLS_; ++j) {
+	    if (unix_args[j].token && unix_args[j].is_hash_algo
+		&& !strncasecmp(val, unix_args[j].token, strlen(unix_args[j].token))) {
+	      break;
+	    }
+	  }
+	  if (j >= UNIX_CTRLS_) {
+	    pam_syslog(pamh, LOG_WARNING, "unrecognized ENCRYPT_METHOD value [%s]", val);
+	  } else {
+	    ctrl &= unix_args[j].mask;	/* for turning things off */
+	    ctrl |= unix_args[j].flag;	/* for turning things on  */
+	  }
+	  free (val);
+
+	  /* read number of rounds for crypt algo */
+	  if (rounds && (on(UNIX_SHA256_PASS, ctrl) || on(UNIX_SHA512_PASS, ctrl))) {
+	    val=search_key ("SHA_CRYPT_MAX_ROUNDS", LOGIN_DEFS);
+
+	    if (val) {
+	      *rounds = strtol(val, NULL, 10);
+	      free (val);
+	    }
+	  }
+	}
+
 	/* now parse the arguments to this module */
 
 	for (; argc-- > 0; ++argv) {
-		int j;
 
 		D(("pam_unix arg: %s", *argv));
 
@@ -460,41 +564,42 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
     /* fork */
     child = fork();
     if (child == 0) {
-        int i=0;
-        struct rlimit rlim;
 	static char *envp[] = { NULL };
-	char *args[] = { NULL, NULL, NULL, NULL };
+	const char *args[] = { NULL, NULL, NULL, NULL };
 
 	/* XXX - should really tidy up PAM here too */
 
 	/* reopen stdin as pipe */
-	dup2(fds[0], STDIN_FILENO);
+	if (dup2(fds[0], STDIN_FILENO) != STDIN_FILENO) {
+		pam_syslog(pamh, LOG_ERR, "dup2 of %s failed: %m", "stdin");
+		_exit(PAM_AUTHINFO_UNAVAIL);
+	}
 
-	if (getrlimit(RLIMIT_NOFILE,&rlim)==0) {
-          if (rlim.rlim_max >= MAX_FD_NO)
-                rlim.rlim_max = MAX_FD_NO;
-	  for (i=0; i < (int)rlim.rlim_max; i++) {
-		if (i != STDIN_FILENO)
-		  close(i);
-	  }
+	if (pam_modutil_sanitize_helper_fds(pamh, PAM_MODUTIL_IGNORE_FD,
+					    PAM_MODUTIL_PIPE_FD,
+					    PAM_MODUTIL_PIPE_FD) < 0) {
+		_exit(PAM_AUTHINFO_UNAVAIL);
 	}
 
 	if (geteuid() == 0) {
           /* must set the real uid to 0 so the helper will not error
 	     out if pam is called from setuid binary (su, sudo...) */
-	  setuid(0);
+	  if (setuid(0) == -1) {
+             D(("setuid failed"));
+	     _exit(PAM_AUTHINFO_UNAVAIL);
+          }
 	}
 
 	/* exec binary helper */
-	args[0] = strdup(CHKPWD_HELPER);
-	args[1] = x_strdup(user);
+	args[0] = CHKPWD_HELPER;
+	args[1] = user;
 	if (off(UNIX__NONULL, ctrl)) {	/* this means we've succeeded */
-	  args[2]=strdup("nullok");
+	  args[2]="nullok";
 	} else {
-	  args[2]=strdup("nonull");
+	  args[2]="nonull";
 	}
 
-	execve(CHKPWD_HELPER, args, envp);
+	execve(CHKPWD_HELPER, (char *const *) args, envp);
 
 	/* should not get here: exit with error */
 	D(("helper binary is not available"));
@@ -504,7 +609,12 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 	/* if the stored password is NULL */
         int rc=0;
 	if (passwd != NULL) {            /* send the password to the child */
-	    if (write(fds[1], passwd, strlen(passwd)+1) == -1) {
+	    int len = strlen(passwd);
+
+	    if (len > PAM_MAX_RESP_SIZE)
+	      len = PAM_MAX_RESP_SIZE;
+	    if (write(fds[1], passwd, len) == -1 ||
+	        write(fds[1], "", 1) == -1) {
 	      pam_syslog (pamh, LOG_ERR, "Cannot send password to helper: %m");
 	      retval = PAM_AUTH_ERR;
 	    }
@@ -517,7 +627,8 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 	}
 	close(fds[0]);       /* close here to avoid possible SIGPIPE above */
 	close(fds[1]);
-	rc=waitpid(child, &retval, 0);  /* wait for helper to complete */
+	/* wait for helper to complete: */
+	while ((rc=waitpid(child, &retval, 0)) < 0 && errno == EINTR);
 	if (rc<0) {
 	  pam_syslog(pamh, LOG_ERR, "unix_chkpwd waitpid returned %d: %m", rc);
 	  retval = PAM_AUTH_ERR;
@@ -680,10 +791,10 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 				login_name = "";
 			    }
 
-			        new->user = x_strdup(name ? name : "");
+			        new->user = strdup(name ? name : "");
 				new->uid = getuid();
 				new->euid = geteuid();
-				new->name = x_strdup(login_name);
+				new->name = strdup(login_name);
 
 				/* any previous failures for this user ? */
 				if (pam_get_data(pamh, data_name, &void_old)

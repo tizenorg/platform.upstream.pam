@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Ani Peter <apeter@redhat.com>, 2007.
+# Ani Peter <apeter@redhat.com>, 2007,2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Linux-PAM\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/projects/pam\n"
-"POT-Creation-Date: 2012-08-17 11:35+0200\n"
-"PO-Revision-Date: 2011-11-30 12:00+0000\n"
-"Last-Translator: Tomáš Mráz <tmraz@fedoraproject.org>\n"
+"POT-Creation-Date: 2015-06-22 14:16+0200\n"
+"PO-Revision-Date: 2013-04-15 05:55+0000\n"
+"Last-Translator: Ani Peter <apeter@redhat.com>\n"
 "Language-Team: Malayalam <discuss@lists.smc.org.in>\n"
+"Language: ml\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ml\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: libpam_misc/misc_conv.c:33
 msgid "...Time is running out...\n"
@@ -26,12 +26,12 @@ msgstr "...സമയപരിധി അവസാനിക്കുന്നു..
 msgid "...Sorry, your time is up!\n"
 msgstr "...ക്ഷമിക്കണം, നിങ്ങളുടെ സമയം കഴിഞ്ഞിരിക്കുന്നു!\n"
 
-#: libpam_misc/misc_conv.c:342
+#: libpam_misc/misc_conv.c:346
 #, c-format
 msgid "erroneous conversation (%d)\n"
 msgstr "തെറ്റായ സംവാദം (%d)\n"
 
-#: libpam/pam_get_authtok.c:39 modules/pam_exec/pam_exec.c:142
+#: libpam/pam_get_authtok.c:39 modules/pam_exec/pam_exec.c:170
 #: modules/pam_unix/pam_unix_auth.c:160 modules/pam_userdb/pam_userdb.c:64
 msgid "Password: "
 msgstr "അടയാളവാക്ക്: "
@@ -50,12 +50,12 @@ msgstr "വീണ്ടും %s%s അടയാളവാക്ക് ടൈപ�
 msgid "Sorry, passwords do not match."
 msgstr "ക്ഷമിക്കണം, അടയാളവാക്കുകള്‍ തമ്മില്‍ ചേരുന്നില്ല."
 
-#: libpam/pam_get_authtok.c:135 libpam/pam_get_authtok.c:211
+#: libpam/pam_get_authtok.c:135 libpam/pam_get_authtok.c:212
 #, c-format
 msgid "Retype %s"
 msgstr "%s വീണ്ടും ടൈപ്പ് ചെയ്യുക"
 
-#: libpam/pam_get_authtok.c:155 libpam/pam_get_authtok.c:227
+#: libpam/pam_get_authtok.c:156 libpam/pam_get_authtok.c:228
 msgid "Password change aborted."
 msgstr "അടയാളവാക്ക് മാറ്റം വരുത്തുന്നതു് നിര്‍ത്തിയിരിക്കുന്നു."
 
@@ -203,7 +203,7 @@ msgstr "പഴയത് പോലെ തന്നെയാകുന്നതു�
 #: modules/pam_cracklib/pam_cracklib.c:628
 #: modules/pam_cracklib/pam_cracklib.c:638
 msgid "memory allocation error"
-msgstr ""
+msgstr "മെമ്മറി അനുവദിയ്ക്കുന്നതില്‍ പിശക്"
 
 #: modules/pam_cracklib/pam_cracklib.c:643
 msgid "is a palindrome"
@@ -234,21 +234,20 @@ msgid "contains too many same characters consecutively"
 msgstr "അടുത്തടുത്ത് ഒരേപോലുള്ള അനവധി അക്ഷരങ്ങളുണ്ടു്"
 
 #: modules/pam_cracklib/pam_cracklib.c:664
-#, fuzzy
 msgid "contains too long of a monotonic character sequence"
-msgstr "അടുത്തടുത്ത് ഒരേപോലുള്ള അനവധി അക്ഷരങ്ങളുണ്ടു്"
+msgstr "വളരെയധികം ഒരേ തരത്തിലുള്ള അക്ഷരങ്ങളടങ്ങുന്നു"
 
 #: modules/pam_cracklib/pam_cracklib.c:667
 msgid "contains the user name in some form"
 msgstr "ഉപയോക്താവിന്റെ നാമം ഏതെങ്കിലും ഒരു തരത്തിലുണ്ടു്"
 
 #: modules/pam_cracklib/pam_cracklib.c:701
-#: modules/pam_unix/pam_unix_passwd.c:494
+#: modules/pam_unix/pam_unix_passwd.c:501
 msgid "No password supplied"
 msgstr "അടയാളവാക്ക് നല്‍കിയിട്ടില്ല"
 
 #: modules/pam_cracklib/pam_cracklib.c:701
-#: modules/pam_unix/pam_unix_passwd.c:494
+#: modules/pam_unix/pam_unix_passwd.c:501
 msgid "Password unchanged"
 msgstr "അടയാളവാക്ക് മാറ്റിയിട്ടില്ല"
 
@@ -258,34 +257,34 @@ msgstr "അടയാളവാക്ക് മാറ്റിയിട്ടി�
 msgid "BAD PASSWORD: %s"
 msgstr "തെറ്റായ അടയാളവാക്ക്: %s"
 
-#: modules/pam_exec/pam_exec.c:215
+#: modules/pam_exec/pam_exec.c:273
 #, c-format
 msgid "%s failed: exit code %d"
 msgstr "%s പരാ‍ജയപ്പെട്ടു: %d എന്ന കോഡില്‍ നിന്നും പുറത്ത് കടക്കുക"
 
-#: modules/pam_exec/pam_exec.c:224
+#: modules/pam_exec/pam_exec.c:282
 #, c-format
 msgid "%s failed: caught signal %d%s"
 msgstr "%s പരാ‍ജയപ്പെട്ടു: %d%s സിഗ്നല്‍ ലഭ്യമായിരിക്കുന്നു"
 
-#: modules/pam_exec/pam_exec.c:233
+#: modules/pam_exec/pam_exec.c:291
 #, c-format
 msgid "%s failed: unknown status 0x%x"
 msgstr "%s പരാ‍ജയപ്പെട്ടു: അപരിചിതമായ 0x%x നിലവാരം"
 
 #. TRANSLATORS: "strftime options for date of last login"
-#: modules/pam_lastlog/pam_lastlog.c:282 modules/pam_lastlog/pam_lastlog.c:492
+#: modules/pam_lastlog/pam_lastlog.c:282 modules/pam_lastlog/pam_lastlog.c:496
 msgid " %a %b %e %H:%M:%S %Z %Y"
 msgstr " %a %b %e %H:%M:%S %Z %Y"
 
 #. TRANSLATORS: " from <host>"
-#: modules/pam_lastlog/pam_lastlog.c:291 modules/pam_lastlog/pam_lastlog.c:501
+#: modules/pam_lastlog/pam_lastlog.c:291 modules/pam_lastlog/pam_lastlog.c:505
 #, c-format
 msgid " from %.*s"
 msgstr " %.*s-ല്‍ നിന്നും"
 
 #. TRANSLATORS: " on <terminal>"
-#: modules/pam_lastlog/pam_lastlog.c:303 modules/pam_lastlog/pam_lastlog.c:513
+#: modules/pam_lastlog/pam_lastlog.c:303 modules/pam_lastlog/pam_lastlog.c:517
 #, c-format
 msgid " on %.*s"
 msgstr " %.*s-ല്‍"
@@ -301,12 +300,12 @@ msgid "Welcome to your new account!"
 msgstr "നിങ്ങളുടെ പുതിയ അക്കൌണ്ടിലേക്ക് സ്വാഗതം!"
 
 #. TRANSLATORS: "Last failed login: <date> from <host> on <terminal>"
-#: modules/pam_lastlog/pam_lastlog.c:523
+#: modules/pam_lastlog/pam_lastlog.c:527
 #, c-format
 msgid "Last failed login:%s%s%s"
 msgstr "അവസാനം ലോഗിന്‍ ചെയ്തതു് പരാജയപ്പെട്ടു:%s%s%s"
 
-#: modules/pam_lastlog/pam_lastlog.c:532 modules/pam_lastlog/pam_lastlog.c:539
+#: modules/pam_lastlog/pam_lastlog.c:536 modules/pam_lastlog/pam_lastlog.c:543
 #, c-format
 msgid "There was %d failed login attempt since the last successful login."
 msgid_plural ""
@@ -315,12 +314,12 @@ msgstr[0] "ശരിയായി അവസാനം ലോഗിന്‍ ചെ
 msgstr[1] "ശരിയായി അവസാനം ലോഗിന്‍ ചെയ്ത ശേഷം %d തവണ ലോഗിന്‍ പരാജയപ്പെട്ടു."
 
 #. TRANSLATORS: only used if dngettext is not supported
-#: modules/pam_lastlog/pam_lastlog.c:544
+#: modules/pam_lastlog/pam_lastlog.c:548
 #, c-format
 msgid "There were %d failed login attempts since the last successful login."
 msgstr "ശരിയായി അവസാനം ലോഗിന്‍ ചെയ്ത ശേഷം %d തവണ ലോഗിന്‍ പരാജയപ്പെട്ടു."
 
-#: modules/pam_limits/pam_limits.c:1079
+#: modules/pam_limits/pam_limits.c:1091
 #, c-format
 msgid "Too many logins for '%s'."
 msgstr "'%s'-ന് അനവധി ലോഗിനുകള്‍."
@@ -361,67 +360,62 @@ msgstr "%s ഫോള്‍ഡറില്‍ നിങ്ങള്‍ക്ക�
 msgid "You have mail in folder %s."
 msgstr "%s ഫോള്‍ഡറില്‍ നിങ്ങള്‍ക്ക് മെയില്‍ ഉണ്ട്."
 
-#: modules/pam_mkhomedir/pam_mkhomedir.c:113
+#: modules/pam_mkhomedir/pam_mkhomedir.c:111
 #, c-format
 msgid "Creating directory '%s'."
 msgstr "'%s' ഡയറക്ടറി ഉണ്ടാക്കുന്നു."
 
-#: modules/pam_mkhomedir/pam_mkhomedir.c:183
+#: modules/pam_mkhomedir/pam_mkhomedir.c:176
 #, c-format
 msgid "Unable to create and initialize directory '%s'."
 msgstr "%s ഡയറക്ടറി ഉണ്ടാക്കുവാനും ആരംഭിക്കുവാനും സാധ്യമായില്ല."
 
 #: modules/pam_pwhistory/pam_pwhistory.c:217
-#: modules/pam_unix/pam_unix_passwd.c:515
+#: modules/pam_unix/pam_unix_passwd.c:522
 msgid "Password has been already used. Choose another."
 msgstr "അടയാളവാക്ക് നിലവില്‍ ഉപയോഗിത്തിലുള്ളതാണ്. മറ്റൊന്ന് നല്‍കുക."
 
 #: modules/pam_pwhistory/pam_pwhistory.c:224
-#, fuzzy
 msgid "Password has been already used."
-msgstr "അടയാളവാക്ക് നിലവില്‍ ഉപയോഗിത്തിലുള്ളതാണ്. മറ്റൊന്ന് നല്‍കുക."
+msgstr "രഹസ്യവാക്ക് നിലവില്‍ ഉപയോഗിച്ചിരിയ്ക്കുന്നു."
 
-#: modules/pam_selinux/pam_selinux.c:172
-msgid "Would you like to enter a security context? [N] "
-msgstr "നിങ്ങള്‍ക്ക് ഒരു സെക്യൂരിറ്റി കോണ്‍ടെക്സ്റ്റ് നല്‍കണമോ? [N] "
-
-#: modules/pam_selinux/pam_selinux.c:191 modules/pam_selinux/pam_selinux.c:299
-msgid "role:"
-msgstr "ജോലി:"
-
-#: modules/pam_selinux/pam_selinux.c:205 modules/pam_selinux/pam_selinux.c:334
-msgid "level:"
-msgstr "നില: "
-
-#: modules/pam_selinux/pam_selinux.c:220 modules/pam_selinux/pam_selinux.c:367
-msgid "Not a valid security context"
-msgstr "ശരിയായ സെക്യൂരിറ്റി കോണ്‍ടെക്സ്റ്റ് അല്ല"
-
-#: modules/pam_selinux/pam_selinux.c:282
+#: modules/pam_selinux/pam_selinux.c:210
 #, c-format
 msgid "Default Security Context %s\n"
 msgstr "സ്വതവേയുള്ള സെക്യൂരിറ്റി കോണ്‍ടെക്സ്റ്റ് %s\n"
 
-#: modules/pam_selinux/pam_selinux.c:286
+#: modules/pam_selinux/pam_selinux.c:214
 msgid "Would you like to enter a different role or level?"
 msgstr "നിങ്ങള്‍ക്കു് മറ്റൊരു ജോലി അല്ലെങ്കില്‍ നില നല്‍കണമോ?"
 
-#: modules/pam_selinux/pam_selinux.c:302
+#: modules/pam_selinux/pam_selinux.c:227
+msgid "role:"
+msgstr "ജോലി:"
+
+#: modules/pam_selinux/pam_selinux.c:230
 #, c-format
 msgid "No default type for role %s\n"
 msgstr "%s ജോലിയ്ക്കു് സ്വതവേയുള്ള തരം ലഭ്യമല്ല\n"
 
-#: modules/pam_selinux/pam_selinux.c:616
+#: modules/pam_selinux/pam_selinux.c:262
+msgid "level:"
+msgstr "നില: "
+
+#: modules/pam_selinux/pam_selinux.c:295
+msgid "Not a valid security context"
+msgstr "ശരിയായ സെക്യൂരിറ്റി കോണ്‍ടെക്സ്റ്റ് അല്ല"
+
+#: modules/pam_selinux/pam_selinux.c:544
 #, c-format
 msgid "Unable to get valid context for %s"
 msgstr "%s-നുള്ള ശരിയായ കോണ്‍ടെക്സ്റ്റ് ലഭ്യമല്ല"
 
-#: modules/pam_selinux/pam_selinux.c:735
+#: modules/pam_selinux/pam_selinux.c:663
 #, c-format
 msgid "Security Context %s Assigned"
 msgstr "%s എന്ന സെക്യൂരിറ്റി കോണ്‍ടെക്സ്റ്റ് നല്‍കിയിരിക്കുന്നു"
 
-#: modules/pam_selinux/pam_selinux.c:751
+#: modules/pam_selinux/pam_selinux.c:679
 #, c-format
 msgid "Key Creation Context %s Assigned"
 msgstr "കീ ഉണ്ടാക്കുന്നതിനുള്ള കോണ്‍ടെക്സ്റ്റ് ആയ %s നല്‍കിയിരിക്കുന്നു"
@@ -522,26 +516,26 @@ msgstr ""
 "   [-u username] [--user username]\n"
 "   [-r] [--reset[=n]] [--quiet]\n"
 
-#: modules/pam_timestamp/pam_timestamp.c:345
+#: modules/pam_timestamp/pam_timestamp.c:357
 #, c-format
 msgid "Access granted (last access was %ld seconds ago)."
 msgstr "അനുവാദം നല്‍കിയിരിക്കുന്നു (ഒടുവില്‍ പ്രവേശിച്ചതു് %ld സെക്കന്‍ഡുകള്‍ക്കു് മുമ്പാണു്)."
 
-#: modules/pam_unix/pam_unix_acct.c:241 modules/pam_unix/pam_unix_acct.c:263
+#: modules/pam_unix/pam_unix_acct.c:244 modules/pam_unix/pam_unix_acct.c:266
 msgid "Your account has expired; please contact your system administrator"
 msgstr ""
 "നിങ്ങളുടെ അക്കൌണ്ടിന്റെ കാലാവധി അവസാനിച്ചിരിക്കുന്നു; ദയവായി സിസ്റ്റം അഡ്മിനിസ്ട്രേറ്ററുമായി "
 "ബന്ധപ്പെടുക"
 
-#: modules/pam_unix/pam_unix_acct.c:249
+#: modules/pam_unix/pam_unix_acct.c:252
 msgid "You are required to change your password immediately (root enforced)"
 msgstr "നിങ്ങളുടെ അടയാളവാക്ക് ഉടനെ മാറ്റേണ്ടതുണ്ട് (root enforced)"
 
-#: modules/pam_unix/pam_unix_acct.c:255
+#: modules/pam_unix/pam_unix_acct.c:258
 msgid "You are required to change your password immediately (password aged)"
 msgstr "നിങ്ങളുടെ അടയാളവാക്ക് ഉടനെ മാറ്റേണ്ടതുണ്ട് (അടയാളവാക്ക് മാറ്റുന്നതിന് സമയമായി)"
 
-#: modules/pam_unix/pam_unix_acct.c:276 modules/pam_unix/pam_unix_acct.c:283
+#: modules/pam_unix/pam_unix_acct.c:279 modules/pam_unix/pam_unix_acct.c:286
 #, c-format
 msgid "Warning: your password will expire in %d day"
 msgid_plural "Warning: your password will expire in %d days"
@@ -549,36 +543,36 @@ msgstr[0] "മുന്നറിയിപ്പ്: നിങ്ങളുടെ 
 msgstr[1] "മുന്നറിയിപ്പ്: നിങ്ങളുടെ അടയാളവാക്കിന്റെ കാലാവധി %d ദിവസത്തിനുള്ളില്‍ അവസാനിക്കുന്നു"
 
 #. TRANSLATORS: only used if dngettext is not supported
-#: modules/pam_unix/pam_unix_acct.c:288
+#: modules/pam_unix/pam_unix_acct.c:291
 #, c-format
 msgid "Warning: your password will expire in %d days"
 msgstr "മുന്നറിയിപ്പ്: നിങ്ങളുടെ അടയാളവാക്കിന്റെ കാലാവധി %d ദിവസത്തിനുള്ളില്‍ അവസാനിക്കുന്നു"
 
-#: modules/pam_unix/pam_unix_passwd.c:396
+#: modules/pam_unix/pam_unix_passwd.c:403
 msgid "NIS password could not be changed."
 msgstr "NIS അടയാളവാക്ക് മാറ്റുവാന്‍ സാധ്യമാകുന്നില്ല."
 
-#: modules/pam_unix/pam_unix_passwd.c:511
+#: modules/pam_unix/pam_unix_passwd.c:518
 msgid "You must choose a longer password"
 msgstr "ഇതിലും വലിയ അടയാളവാക്ക് തിരഞ്ഞെടുക്കുക"
 
-#: modules/pam_unix/pam_unix_passwd.c:617
+#: modules/pam_unix/pam_unix_passwd.c:625
 #, c-format
 msgid "Changing password for %s."
 msgstr "%s-നുളള അടയാളവാക്ക് മാറ്റുന്നു."
 
-#: modules/pam_unix/pam_unix_passwd.c:628
+#: modules/pam_unix/pam_unix_passwd.c:636
 msgid "(current) UNIX password: "
 msgstr "(നിലവിലുളളത്) UNIX രഅടയാളവാക്ക്: "
 
-#: modules/pam_unix/pam_unix_passwd.c:663
+#: modules/pam_unix/pam_unix_passwd.c:671
 msgid "You must wait longer to change your password"
 msgstr "നിങ്ങളുടെ അടയാളവാക്ക് മാറ്റുന്നതിനായി ഇനിയും കാത്തിരിക്കേണ്ടതാണ്."
 
-#: modules/pam_unix/pam_unix_passwd.c:723
+#: modules/pam_unix/pam_unix_passwd.c:731
 msgid "Enter new UNIX password: "
 msgstr "പുതിയ UNIX അടയാളവാക്ക് നല്‍കുക: "
 
-#: modules/pam_unix/pam_unix_passwd.c:724
+#: modules/pam_unix/pam_unix_passwd.c:732
 msgid "Retype new UNIX password: "
 msgstr "പുതിയ UNIX അടയാളവാക്ക് വീണ്ടും ടൈപ്പ് ചെയ്യുക: "

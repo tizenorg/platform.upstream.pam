@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Linux-PAM\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/projects/pam\n"
-"POT-Creation-Date: 2012-08-17 11:35+0200\n"
+"POT-Creation-Date: 2015-06-22 14:16+0200\n"
 "PO-Revision-Date: 2011-11-30 11:57+0000\n"
 "Last-Translator: Tomáš Mráz <tmraz@fedoraproject.org>\n"
 "Language-Team: Hebrew <he-users@lists.fedoraproject.org>\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: libpam_misc/misc_conv.c:33
@@ -25,12 +25,12 @@ msgstr "...הזמן עומד להיגמר...\n"
 msgid "...Sorry, your time is up!\n"
 msgstr "...מצטער, הזמן נגמר!\n"
 
-#: libpam_misc/misc_conv.c:342
+#: libpam_misc/misc_conv.c:346
 #, c-format
 msgid "erroneous conversation (%d)\n"
 msgstr ""
 
-#: libpam/pam_get_authtok.c:39 modules/pam_exec/pam_exec.c:142
+#: libpam/pam_get_authtok.c:39 modules/pam_exec/pam_exec.c:170
 #: modules/pam_unix/pam_unix_auth.c:160 modules/pam_userdb/pam_userdb.c:64
 msgid "Password: "
 msgstr "ססמה: "
@@ -49,12 +49,12 @@ msgstr ""
 msgid "Sorry, passwords do not match."
 msgstr "סליחה, הססמאות לא תואמות."
 
-#: libpam/pam_get_authtok.c:135 libpam/pam_get_authtok.c:211
+#: libpam/pam_get_authtok.c:135 libpam/pam_get_authtok.c:212
 #, c-format
 msgid "Retype %s"
 msgstr ""
 
-#: libpam/pam_get_authtok.c:155 libpam/pam_get_authtok.c:227
+#: libpam/pam_get_authtok.c:156 libpam/pam_get_authtok.c:228
 msgid "Password change aborted."
 msgstr "שינוי ססמה בוטל."
 
@@ -241,12 +241,12 @@ msgid "contains the user name in some form"
 msgstr ""
 
 #: modules/pam_cracklib/pam_cracklib.c:701
-#: modules/pam_unix/pam_unix_passwd.c:494
+#: modules/pam_unix/pam_unix_passwd.c:501
 msgid "No password supplied"
 msgstr "לא סופקה ססמה"
 
 #: modules/pam_cracklib/pam_cracklib.c:701
-#: modules/pam_unix/pam_unix_passwd.c:494
+#: modules/pam_unix/pam_unix_passwd.c:501
 msgid "Password unchanged"
 msgstr "ססמה לא שונתה"
 
@@ -256,34 +256,34 @@ msgstr "ססמה לא שונתה"
 msgid "BAD PASSWORD: %s"
 msgstr "ססמה לא טובה: %s"
 
-#: modules/pam_exec/pam_exec.c:215
+#: modules/pam_exec/pam_exec.c:273
 #, c-format
 msgid "%s failed: exit code %d"
 msgstr ""
 
-#: modules/pam_exec/pam_exec.c:224
+#: modules/pam_exec/pam_exec.c:282
 #, c-format
 msgid "%s failed: caught signal %d%s"
 msgstr ""
 
-#: modules/pam_exec/pam_exec.c:233
+#: modules/pam_exec/pam_exec.c:291
 #, c-format
 msgid "%s failed: unknown status 0x%x"
 msgstr ""
 
 #. TRANSLATORS: "strftime options for date of last login"
-#: modules/pam_lastlog/pam_lastlog.c:282 modules/pam_lastlog/pam_lastlog.c:492
+#: modules/pam_lastlog/pam_lastlog.c:282 modules/pam_lastlog/pam_lastlog.c:496
 msgid " %a %b %e %H:%M:%S %Z %Y"
 msgstr ""
 
 #. TRANSLATORS: " from <host>"
-#: modules/pam_lastlog/pam_lastlog.c:291 modules/pam_lastlog/pam_lastlog.c:501
+#: modules/pam_lastlog/pam_lastlog.c:291 modules/pam_lastlog/pam_lastlog.c:505
 #, c-format
 msgid " from %.*s"
 msgstr ""
 
 #. TRANSLATORS: " on <terminal>"
-#: modules/pam_lastlog/pam_lastlog.c:303 modules/pam_lastlog/pam_lastlog.c:513
+#: modules/pam_lastlog/pam_lastlog.c:303 modules/pam_lastlog/pam_lastlog.c:517
 #, c-format
 msgid " on %.*s"
 msgstr ""
@@ -299,12 +299,12 @@ msgid "Welcome to your new account!"
 msgstr "ברוך הבא לחשבונך החדש!"
 
 #. TRANSLATORS: "Last failed login: <date> from <host> on <terminal>"
-#: modules/pam_lastlog/pam_lastlog.c:523
+#: modules/pam_lastlog/pam_lastlog.c:527
 #, c-format
 msgid "Last failed login:%s%s%s"
 msgstr ""
 
-#: modules/pam_lastlog/pam_lastlog.c:532 modules/pam_lastlog/pam_lastlog.c:539
+#: modules/pam_lastlog/pam_lastlog.c:536 modules/pam_lastlog/pam_lastlog.c:543
 #, c-format
 msgid "There was %d failed login attempt since the last successful login."
 msgid_plural ""
@@ -313,12 +313,12 @@ msgstr[0] "היה ניסיון התחברות %d שנכשל מאז ההתחבר�
 msgstr[1] "היו %d ניסיונות התחברות שנכשלו מאז ההתחברות האחרונה שהצליחה."
 
 #. TRANSLATORS: only used if dngettext is not supported
-#: modules/pam_lastlog/pam_lastlog.c:544
+#: modules/pam_lastlog/pam_lastlog.c:548
 #, c-format
 msgid "There were %d failed login attempts since the last successful login."
 msgstr ""
 
-#: modules/pam_limits/pam_limits.c:1079
+#: modules/pam_limits/pam_limits.c:1091
 #, c-format
 msgid "Too many logins for '%s'."
 msgstr ""
@@ -359,18 +359,18 @@ msgstr ""
 msgid "You have mail in folder %s."
 msgstr ""
 
-#: modules/pam_mkhomedir/pam_mkhomedir.c:113
+#: modules/pam_mkhomedir/pam_mkhomedir.c:111
 #, c-format
 msgid "Creating directory '%s'."
 msgstr ""
 
-#: modules/pam_mkhomedir/pam_mkhomedir.c:183
+#: modules/pam_mkhomedir/pam_mkhomedir.c:176
 #, c-format
 msgid "Unable to create and initialize directory '%s'."
 msgstr ""
 
 #: modules/pam_pwhistory/pam_pwhistory.c:217
-#: modules/pam_unix/pam_unix_passwd.c:515
+#: modules/pam_unix/pam_unix_passwd.c:522
 msgid "Password has been already used. Choose another."
 msgstr ""
 
@@ -379,47 +379,43 @@ msgstr ""
 msgid "Password has been already used."
 msgstr "שינוי ססמה בוטל."
 
-#: modules/pam_selinux/pam_selinux.c:172
-msgid "Would you like to enter a security context? [N] "
-msgstr ""
-
-#: modules/pam_selinux/pam_selinux.c:191 modules/pam_selinux/pam_selinux.c:299
-msgid "role:"
-msgstr "תפקיד: "
-
-#: modules/pam_selinux/pam_selinux.c:205 modules/pam_selinux/pam_selinux.c:334
-msgid "level:"
-msgstr "רמה:"
-
-#: modules/pam_selinux/pam_selinux.c:220 modules/pam_selinux/pam_selinux.c:367
-msgid "Not a valid security context"
-msgstr ""
-
-#: modules/pam_selinux/pam_selinux.c:282
+#: modules/pam_selinux/pam_selinux.c:210
 #, c-format
 msgid "Default Security Context %s\n"
 msgstr ""
 
-#: modules/pam_selinux/pam_selinux.c:286
+#: modules/pam_selinux/pam_selinux.c:214
 msgid "Would you like to enter a different role or level?"
 msgstr ""
 
-#: modules/pam_selinux/pam_selinux.c:302
+#: modules/pam_selinux/pam_selinux.c:227
+msgid "role:"
+msgstr "תפקיד: "
+
+#: modules/pam_selinux/pam_selinux.c:230
 #, c-format
 msgid "No default type for role %s\n"
 msgstr ""
 
-#: modules/pam_selinux/pam_selinux.c:616
+#: modules/pam_selinux/pam_selinux.c:262
+msgid "level:"
+msgstr "רמה:"
+
+#: modules/pam_selinux/pam_selinux.c:295
+msgid "Not a valid security context"
+msgstr ""
+
+#: modules/pam_selinux/pam_selinux.c:544
 #, c-format
 msgid "Unable to get valid context for %s"
 msgstr ""
 
-#: modules/pam_selinux/pam_selinux.c:735
+#: modules/pam_selinux/pam_selinux.c:663
 #, c-format
 msgid "Security Context %s Assigned"
 msgstr ""
 
-#: modules/pam_selinux/pam_selinux.c:751
+#: modules/pam_selinux/pam_selinux.c:679
 #, c-format
 msgid "Key Creation Context %s Assigned"
 msgstr ""
@@ -516,24 +512,24 @@ msgid ""
 "   [-r] [--reset[=n]] [--quiet]\n"
 msgstr ""
 
-#: modules/pam_timestamp/pam_timestamp.c:345
+#: modules/pam_timestamp/pam_timestamp.c:357
 #, c-format
 msgid "Access granted (last access was %ld seconds ago)."
 msgstr ""
 
-#: modules/pam_unix/pam_unix_acct.c:241 modules/pam_unix/pam_unix_acct.c:263
+#: modules/pam_unix/pam_unix_acct.c:244 modules/pam_unix/pam_unix_acct.c:266
 msgid "Your account has expired; please contact your system administrator"
 msgstr "פג תוקף חשבונך; אנא צור קשר עם מנהל המערכת שלך"
 
-#: modules/pam_unix/pam_unix_acct.c:249
+#: modules/pam_unix/pam_unix_acct.c:252
 msgid "You are required to change your password immediately (root enforced)"
 msgstr "הנך מחויב לשנות את ססמתך מידית (דרישת מנהל המערכת)"
 
-#: modules/pam_unix/pam_unix_acct.c:255
+#: modules/pam_unix/pam_unix_acct.c:258
 msgid "You are required to change your password immediately (password aged)"
 msgstr "הנך מחויב לשנות את ססמתך מידית (הססמה התיישנה)"
 
-#: modules/pam_unix/pam_unix_acct.c:276 modules/pam_unix/pam_unix_acct.c:283
+#: modules/pam_unix/pam_unix_acct.c:279 modules/pam_unix/pam_unix_acct.c:286
 #, c-format
 msgid "Warning: your password will expire in %d day"
 msgid_plural "Warning: your password will expire in %d days"
@@ -541,36 +537,36 @@ msgstr[0] "אזהרה: הססמה שלך תפוג תוך יום %d"
 msgstr[1] "אזהרה: הססמה שלך תפוג תוך %d ימים"
 
 #. TRANSLATORS: only used if dngettext is not supported
-#: modules/pam_unix/pam_unix_acct.c:288
+#: modules/pam_unix/pam_unix_acct.c:291
 #, c-format
 msgid "Warning: your password will expire in %d days"
 msgstr "אזהרה: הססמה שלך תפוג תוך %d ימים"
 
-#: modules/pam_unix/pam_unix_passwd.c:396
+#: modules/pam_unix/pam_unix_passwd.c:403
 msgid "NIS password could not be changed."
 msgstr "לא היה ניתן לשנות ססמת NIS."
 
-#: modules/pam_unix/pam_unix_passwd.c:511
+#: modules/pam_unix/pam_unix_passwd.c:518
 msgid "You must choose a longer password"
 msgstr "אתה חייב לבחור ססמה ארוכה יותר"
 
-#: modules/pam_unix/pam_unix_passwd.c:617
+#: modules/pam_unix/pam_unix_passwd.c:625
 #, c-format
 msgid "Changing password for %s."
 msgstr "משנה ססמה עבור %s.‏"
 
-#: modules/pam_unix/pam_unix_passwd.c:628
+#: modules/pam_unix/pam_unix_passwd.c:636
 msgid "(current) UNIX password: "
 msgstr "ססמת יוניקס (נוכחית): "
 
-#: modules/pam_unix/pam_unix_passwd.c:663
+#: modules/pam_unix/pam_unix_passwd.c:671
 msgid "You must wait longer to change your password"
 msgstr "אתה חייב לחכות יותר כדי לשנות את הססמה"
 
-#: modules/pam_unix/pam_unix_passwd.c:723
+#: modules/pam_unix/pam_unix_passwd.c:731
 msgid "Enter new UNIX password: "
 msgstr "הכנס ססמת יוניקס חדשה:"
 
-#: modules/pam_unix/pam_unix_passwd.c:724
+#: modules/pam_unix/pam_unix_passwd.c:732
 msgid "Retype new UNIX password: "
 msgstr "נא להקליד שוב את ססמת היוניקס החדשה: "

@@ -58,6 +58,7 @@
 #include <unistd.h>
 #include <utmp.h>
 #include <syslog.h>
+#include <paths.h>
 #include "hmacsha1.h"
 
 #include <security/pam_modules.h>
@@ -69,7 +70,7 @@
  * for the timestamp_timeout parameter. */
 #define DEFAULT_TIMESTAMP_TIMEOUT (5 * 60)
 #define MODULE "pam_timestamp"
-#define TIMESTAMPDIR "/var/run/sudo"
+#define TIMESTAMPDIR _PATH_VARRUN "/" MODULE
 #define TIMESTAMPKEY TIMESTAMPDIR "/_pam_timestamp_key"
 
 /* Various buffers we use need to be at least as large as either PATH_MAX or
@@ -158,7 +159,7 @@ check_tty(const char *tty)
 		tty = strrchr(tty, '/') + 1;
 	}
 	/* Make sure the tty wasn't actually a directory (no basename). */
-	if (strlen(tty) == 0) {
+	if (!strlen(tty) || !strcmp(tty, ".") || !strcmp(tty, "..")) {
 		return NULL;
 	}
 	return tty;
@@ -242,6 +243,17 @@ get_ruser(pam_handle_t *pamh, char *ruserbuf, size_t ruserbuflen)
 		pwd = pam_modutil_getpwuid(pamh, getuid());
 		if (pwd != NULL) {
 			ruser = pwd->pw_name;
+		}
+	} else {
+		/*
+		 * This ruser is used by format_timestamp_name as a component
+		 * of constructed timestamp pathname, so ".", "..", and '/'
+		 * are disallowed to avoid potential path traversal issues.
+		 */
+		if (!strcmp(ruser, ".") ||
+		    !strcmp(ruser, "..") ||
+		    strchr(ruser, '/')) {
+			ruser = NULL;
 		}
 	}
 	if (ruser == NULL || strlen(ruser) >= ruserbuflen) {
