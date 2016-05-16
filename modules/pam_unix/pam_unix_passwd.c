@@ -58,6 +58,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <sys/wait.h>
+#include <sys/resource.h>
 
 #include <security/_pam_macros.h>
 
@@ -200,39 +201,37 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
     /* fork */
     child = fork();
     if (child == 0) {
-        int i=0;
-        struct rlimit rlim;
 	static char *envp[] = { NULL };
-	char *args[] = { NULL, NULL, NULL, NULL, NULL, NULL };
+	const char *args[] = { NULL, NULL, NULL, NULL, NULL, NULL };
         char buffer[16];
 
 	/* XXX - should really tidy up PAM here too */
 
 	/* reopen stdin as pipe */
-	dup2(fds[0], STDIN_FILENO);
+	if (dup2(fds[0], STDIN_FILENO) != STDIN_FILENO) {
+		pam_syslog(pamh, LOG_ERR, "dup2 of %s failed: %m", "stdin");
+		_exit(PAM_AUTHINFO_UNAVAIL);
+	}
 
-	if (getrlimit(RLIMIT_NOFILE,&rlim)==0) {
-	  if (rlim.rlim_max >= MAX_FD_NO)
-	    rlim.rlim_max = MAX_FD_NO;
-	  for (i=0; i < (int)rlim.rlim_max; i++) {
-	    if (i != STDIN_FILENO)
-		close(i);
-	  }
+	if (pam_modutil_sanitize_helper_fds(pamh, PAM_MODUTIL_IGNORE_FD,
+					    PAM_MODUTIL_PIPE_FD,
+					    PAM_MODUTIL_PIPE_FD) < 0) {
+		_exit(PAM_AUTHINFO_UNAVAIL);
 	}
 
 	/* exec binary helper */
-	args[0] = x_strdup(UPDATE_HELPER);
-	args[1] = x_strdup(user);
-	args[2] = x_strdup("update");
+	args[0] = UPDATE_HELPER;
+	args[1] = user;
+	args[2] = "update";
 	if (on(UNIX_SHADOW, ctrl))
-		args[3] = x_strdup("1");
+		args[3] = "1";
 	else
-		args[3] = x_strdup("0");
+		args[3] = "0";
 
         snprintf(buffer, sizeof(buffer), "%d", remember);
-        args[4] = x_strdup(buffer);
+        args[4] = buffer;
 
-	execve(UPDATE_HELPER, args, envp);
+	execve(UPDATE_HELPER, (char *const *) args, envp);
 
 	/* should not get here: exit with error */
 	D(("helper binary is not available"));
@@ -241,19 +240,27 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
 	/* wait for child */
 	/* if the stored password is NULL */
         int rc=0;
-	if (fromwhat)
-	  pam_modutil_write(fds[1], fromwhat, strlen(fromwhat)+1);
-	else
-	  pam_modutil_write(fds[1], "", 1);
-	if (towhat) {
-	  pam_modutil_write(fds[1], towhat, strlen(towhat)+1);
+	if (fromwhat) {
+	    int len = strlen(fromwhat);
+
+	    if (len > PAM_MAX_RESP_SIZE)
+	      len = PAM_MAX_RESP_SIZE;
+	    pam_modutil_write(fds[1], fromwhat, len);
 	}
-	else
-	  pam_modutil_write(fds[1], "", 1);
+        pam_modutil_write(fds[1], "", 1);
+	if (towhat) {
+	    int len = strlen(towhat);
+
+	    if (len > PAM_MAX_RESP_SIZE)
+	      len = PAM_MAX_RESP_SIZE;
+	    pam_modutil_write(fds[1], towhat, len);
+        }
+        pam_modutil_write(fds[1], "", 1);
 
 	close(fds[0]);       /* close here to avoid possible SIGPIPE above */
 	close(fds[1]);
-	rc=waitpid(child, &retval, 0);  /* wait for helper to complete */
+	/* wait for helper to complete: */
+	while ((rc=waitpid(child, &retval, 0)) < 0 && errno == EINTR);
 	if (rc<0) {
 	  pam_syslog(pamh, LOG_ERR, "unix_update waitpid failed: %m");
 	  retval = PAM_AUTHTOK_ERR;
@@ -301,7 +308,7 @@ static int check_old_password(const char *forwho, const char *newpass)
 			s_pas = strtok_r(NULL, ":,", &sptr);
 			while (s_pas != NULL) {
 				char *md5pass = Goodcrypt_md5(newpass, s_pas);
-				if (!strcmp(md5pass, s_pas)) {
+				if (md5pass == NULL || !strcmp(md5pass, s_pas)) {
 					_pam_delete(md5pass);
 					retval = PAM_AUTHTOK_ERR;
 					break;
@@ -612,7 +619,8 @@ pam_sm_chauthtok(pam_handle_t *pamh, int flags, int argc, const char **argv)
 
 		if (_unix_blankpasswd(pamh, ctrl, user)) {
 			return PAM_SUCCESS;
-		} else if (off(UNIX__IAMROOT, ctrl)) {
+		} else if (off(UNIX__IAMROOT, ctrl) ||
+			   (on(UNIX_NIS, ctrl) && _unix_comesfromsource(pamh, user, 0, 1))) {
 			/* instruct user what is happening */
 			if (asprintf(&Announce, _("Changing password for %s."),
 				user) < 0) {

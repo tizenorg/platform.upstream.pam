@@ -1,9 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT
+AC_INIT([Linux-PAM], [1.2.1], , [Linux-PAM])
 AC_CONFIG_SRCDIR([conf/pam_conv1/pam_conv_y.y])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE("Linux-PAM", 1.1.6)
-AC_PREREQ(2.61)
+AM_INIT_AUTOMAKE([-Wall -Wno-portability])
+AC_PREREQ([2.61])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_HOST
@@ -57,6 +57,11 @@ dnl Add /var directory
 
 fi
 
+dnl This should be called before any macros that run the C compiler.
+AC_USE_SYSTEM_EXTENSIONS
+
+LT_INIT([disable-static])
+
 dnl
 dnl check if we should link everything static into libpam
 dnl
@@ -75,14 +80,12 @@ fi
 AM_CONDITIONAL([STATIC_MODULES], [test "$STATIC_MODULES" != "no"])
 
 dnl Checks for programs.
-AC_USE_SYSTEM_EXTENSIONS
 AC_PROG_CC
 AC_PROG_YACC
 AM_PROG_LEX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PROG_LIBTOOL
 AM_PROG_CC_C_O
 PAM_LD_AS_NEEDED
 PAM_LD_NO_UNDEFINED
@@ -140,6 +143,15 @@ fi
 AC_MSG_CHECKING([for CC_FOR_BUILD])
 AC_MSG_RESULT([$CC_FOR_BUILD])
 AC_SUBST(CC_FOR_BUILD)
+
+if test "x${BUILD_CPPFLAGS+set}" != "xset" ; then
+  if test "x$cross_compiling" = "xyes" ; then
+    BUILD_CPPFLAGS=
+  else
+    BUILD_CPPFLAGS=${CPPFLAGS}
+  fi
+fi
+AC_SUBST(BUILD_CPPFLAGS)
 
 if test "x${BUILD_CFLAGS+set}" != "xset" ; then
   if test "x$cross_compiling" = "xyes" ; then
@@ -386,6 +398,10 @@ if test x"$WITH_LIBAUDIT" != xno ; then
         fi
         if test ! -z "$HAVE_AUDIT_TTY_STATUS" ; then
             AC_DEFINE([HAVE_AUDIT_TTY_STATUS], 1, [Define to 1 if struct audit_tty_status exists.])
+
+            AC_CHECK_MEMBERS([struct audit_tty_status.log_passwd], [],
+                            AC_MSG_WARN([audit_tty_status.log_passwd is not available.  The log_passwd option is disabled.]),
+                            [[#include <libaudit.h>]])
         fi
 else
 	LIBAUDIT=""
@@ -532,7 +548,7 @@ AC_CHECK_FUNCS(unshare, [UNSHARE=yes], [UNSHARE=no])
 AM_CONDITIONAL([HAVE_UNSHARE], [test "$UNSHARE" = yes])
 
 AC_ARG_ENABLE([regenerate-docu],
-  AC_HELP_STRING([--disable-regenerate-docu], [Don't re-build documentation from XML souces]),
+  AS_HELP_STRING([--disable-regenerate-docu],[Don't re-build documentation from XML sources]),
   [enable_docu=$enableval], [enable_docu=yes])
 dnl
 dnl Check for xsltproc
@@ -561,7 +577,7 @@ AM_CONDITIONAL(ENABLE_REGENERATE_MAN, test x$enable_docu != xno)
 AM_CONDITIONAL(ENABLE_GENERATE_PDF, test ! -z "$FO2PDF")
 
 
-AM_GNU_GETTEXT_VERSION([0.15])
+AM_GNU_GETTEXT_VERSION([0.18.3])
 AM_GNU_GETTEXT([external])
 AC_CHECK_FUNCS(dngettext)
 
