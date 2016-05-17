@@ -12,7 +12,7 @@
 Name:           pam
 Version:        1.2.1
 Release:        0
-License:        GPL-2.0+ or BSD-2.0
+License:        BSD-2.0 or GPL-2.0+
 Summary:        A Security Tool that Provides Authentication for Applications
 Url:            http://www.linux-pam.org/
 Group:          Security/Access Control
@@ -115,7 +115,7 @@ fi
 
 %files
 %manifest %{name}.manifest
-%license Copyright
+%license COPYING
 %{_sbindir}/pam_tally
 %{_sbindir}/pam_tally2
 %attr(4755,root,root) %{_sbindir}/pam_timestamp_check
