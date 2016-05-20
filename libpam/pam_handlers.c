@@ -274,66 +274,6 @@ static int _pam_parse_conf_file(pam_handle_t *pamh, FILE *f
     return ( (x < 0) ? PAM_ABORT:PAM_SUCCESS );
 }
 
-static int
-_pam_open_config_file(pam_handle_t *pamh
-			, const char *service
-			, char **path
-			, FILE **file)
-{
-    char *p;
-    FILE *f;
-    int err = 0;
-
-    /* Absolute path */
-    if (service[0] == '/') {
-	p = _pam_strdup(service);
-	if (p == NULL) {
-	    pam_syslog(pamh, LOG_CRIT, "strdup failed");
-	    return PAM_BUF_ERR;
-	}
-
-	f = fopen(service, "r");
-	if (f != NULL) {
-	    *path = p;
-	    *file = f;
-	    return PAM_SUCCESS;
-	}
-
-	_pam_drop(p);
-	return PAM_ABORT;
-    }
-
-    /* Local Machine Configuration /etc/pam.d/ */
-    if (asprintf (&p, PAM_CONFIG_DF, service) < 0) {
-	pam_syslog(pamh, LOG_CRIT, "asprintf failed");
-	return PAM_BUF_ERR;
-    }
-    D(("opening %s", p));
-    f = fopen(p, "r");
-    if (f != NULL) {
-	    *path = p;
-	    *file = f;
-	    return PAM_SUCCESS;
-    }
-
-    /* System Configuration /usr/lib/pam.d/ */
-    _pam_drop(p);
-    if (asprintf (&p, PAM_CONFIG_DIST_DF, service) < 0) {
-	pam_syslog(pamh, LOG_CRIT, "asprintf failed");
-	return PAM_BUF_ERR;
-    }
-    D(("opening %s", p));
-    f = fopen(p, "r");
-    if (f != NULL) {
-	    *path = p;
-	    *file = f;
-	    return PAM_SUCCESS;
-    }
-    _pam_drop(p);
-
-    return PAM_ABORT;
-}
-
 static int _pam_load_conf_file(pam_handle_t *pamh, const char *config_name
 				, const char *service /* specific file */
 				, int module_type /* specific type */
@@ -344,7 +284,7 @@ static int _pam_load_conf_file(pam_handle_t *pamh, const char *config_name
     )
 {
     FILE *f;
-    char *path = NULL;
+    char *config_path = NULL;
     int retval = PAM_ABORT;
 
     D(("_pam_load_conf_file called"));
@@ -357,29 +297,39 @@ static int _pam_load_conf_file(pam_handle_t *pamh, const char *config_name
 
     if (config_name == NULL) {
 	D(("no config file supplied"));
-	pam_syslog(pamh, LOG_ERR, "(%s) no config name supplied", service);
+	pam_syslog(pamh, LOG_ERR, "(%s) no config file supplied", service);
 	return PAM_ABORT;
     }
 
-    if (_pam_open_config_file(pamh, config_name, &path, &f) == PAM_SUCCESS) {
+    if (config_name[0] != '/') {
+	if (asprintf (&config_path, PAM_CONFIG_DF, config_name) < 0) {
+	    pam_syslog(pamh, LOG_CRIT, "asprintf failed");
+	    return PAM_BUF_ERR;
+	}
+	config_name = config_path;
+    }
+
+    D(("opening %s", config_name));
+    f = fopen(config_name, "r");
+    if (f != NULL) {
 	retval = _pam_parse_conf_file(pamh, f, service, module_type, stack_level
 #ifdef PAM_READ_BOTH_CONFS
 					      , not_other
 #endif /* PAM_READ_BOTH_CONFS */
 	    );
+	fclose(f);
 	if (retval != PAM_SUCCESS)
 	    pam_syslog(pamh, LOG_ERR,
 		       "_pam_load_conf_file: error reading %s: %s",
-		       path, pam_strerror(pamh, retval));
-	_pam_drop(path);
-	fclose(f);
+		       config_name, pam_strerror(pamh, retval));
     } else {
 	D(("unable to open %s", config_name));
 	pam_syslog(pamh, LOG_ERR,
-		   "_pam_load_conf_file: unable to open config for %s",
+		   "_pam_load_conf_file: unable to open %s",
 		   config_name);
     }
 
+    _pam_drop(config_path);
     return retval;
 }
 
@@ -446,31 +396,39 @@ int _pam_init_handlers(pam_handle_t *pamh)
 	struct stat test_d;
 
 	/* Is there a PAM_CONFIG_D directory? */
-	if ((stat(PAM_CONFIG_D, &test_d) == 0 && S_ISDIR(test_d.st_mode)) ||
-	    (stat(PAM_CONFIG_DIST_D, &test_d) == 0 && S_ISDIR(test_d.st_mode))) {
-	    char *path = NULL;
+	if ( stat(PAM_CONFIG_D, &test_d) == 0 && S_ISDIR(test_d.st_mode) ) {
+	    char *filename;
 	    int read_something=0;
 
-	    if (_pam_open_config_file(pamh, pamh->service_name, &path, &f) == PAM_SUCCESS) {
+	    D(("searching " PAM_CONFIG_D " for config files"));
+	    if (asprintf(&filename, PAM_CONFIG_DF, pamh->service_name) < 0) {
+		pam_syslog(pamh, LOG_ERR,
+				"_pam_init_handlers: no memory; service %s",
+				pamh->service_name);
+		return PAM_BUF_ERR;
+	    }
+	    D(("opening %s", filename));
+	    f = fopen(filename, "r");
+	    if (f != NULL) {
+		/* would test magic here? */
 		retval = _pam_parse_conf_file(pamh, f, pamh->service_name,
 		    PAM_T_ANY, 0
 #ifdef PAM_READ_BOTH_CONFS
 					      , 0
 #endif /* PAM_READ_BOTH_CONFS */
 		    );
+		fclose(f);
 		if (retval != PAM_SUCCESS) {
 		    pam_syslog(pamh, LOG_ERR,
 				    "_pam_init_handlers: error reading %s",
-				    path);
+				    filename);
 		    pam_syslog(pamh, LOG_ERR, "_pam_init_handlers: [%s]",
 				    pam_strerror(pamh, retval));
 		} else {
 		    read_something = 1;
 		}
-		_pam_drop(path);
-		fclose(f);
 	    } else {
-		D(("unable to open configuration for %s", pamh->service_name));
+		D(("unable to open %s", filename));
 #ifdef PAM_READ_BOTH_CONFS
 		D(("checking %s", PAM_CONFIG));
 
@@ -485,11 +443,14 @@ int _pam_init_handlers(pam_handle_t *pamh)
 		 * use "other"
 		 */
 	    }
+	    _pam_drop(filename);
 
 	    if (retval == PAM_SUCCESS) {
-		/* now parse the PAM_DEFAULT_SERVICE */
+		/* now parse the PAM_DEFAULT_SERVICE_FILE */
 
-		if (_pam_open_config_file(pamh, PAM_DEFAULT_SERVICE, &path, &f) == PAM_SUCCESS) {
+		D(("opening %s", PAM_DEFAULT_SERVICE_FILE));
+		f = fopen(PAM_DEFAULT_SERVICE_FILE, "r");
+		if (f != NULL) {
 		    /* would test magic here? */
 		    retval = _pam_parse_conf_file(pamh, f, PAM_DEFAULT_SERVICE,
 			PAM_T_ANY, 0
@@ -497,23 +458,22 @@ int _pam_init_handlers(pam_handle_t *pamh)
 						  , 0
 #endif /* PAM_READ_BOTH_CONFS */
 			);
+		    fclose(f);
 		    if (retval != PAM_SUCCESS) {
 			pam_syslog(pamh, LOG_ERR,
 					"_pam_init_handlers: error reading %s",
-					path);
+					PAM_DEFAULT_SERVICE_FILE);
 			pam_syslog(pamh, LOG_ERR,
 					"_pam_init_handlers: [%s]",
 					pam_strerror(pamh, retval));
 		    } else {
 			read_something = 1;
 		    }
-		    _pam_drop(path);
-		    fclose(f);
 		} else {
-		    D(("unable to open %s", PAM_DEFAULT_SERVICE));
+		    D(("unable to open %s", PAM_DEFAULT_SERVICE_FILE));
 		    pam_syslog(pamh, LOG_ERR,
 				    "_pam_init_handlers: no default config %s",
-				    PAM_DEFAULT_SERVICE);
+				    PAM_DEFAULT_SERVICE_FILE);
 		}
 		if (!read_something) {          /* nothing read successfully */
 		    retval = PAM_ABORT;
@@ -650,12 +610,6 @@ extract_modulename(const char *mod_path)
   dot = strrchr (retval, '.');
   if (dot)
     *dot = '\0';
-
-  if (*retval == '\0' || strcmp(retval, "?") == 0) {
-    /* do not allow empty module name or "?" to avoid confusing audit trail */
-    _pam_drop(retval);
-    return NULL;
-  }
 
   return retval;
 }
@@ -934,9 +888,7 @@ int _pam_add_handler(pam_handle_t *pamh
     (*handler_p)->cached_retval_p = &((*handler_p)->cached_retval);
     (*handler_p)->argc = argc;
     (*handler_p)->argv = argv;                       /* not a copy */
-    if (((*handler_p)->mod_name = extract_modulename(mod_path)) == NULL)
-	return PAM_ABORT;
-    (*handler_p)->grantor = 0;
+    (*handler_p)->mod_name = extract_modulename(mod_path);
     (*handler_p)->next = NULL;
 
     /* some of the modules have a second calling function */
@@ -968,9 +920,7 @@ int _pam_add_handler(pam_handle_t *pamh
 	} else {
 	    (*handler_p2)->argv = NULL;              /* no arguments */
 	}
-	if (((*handler_p2)->mod_name = extract_modulename(mod_path)) == NULL)
-	    return PAM_ABORT;
-	(*handler_p2)->grantor = 0;
+	(*handler_p2)->mod_name = extract_modulename(mod_path);
 	(*handler_p2)->next = NULL;
     }
 

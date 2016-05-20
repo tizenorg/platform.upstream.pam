@@ -412,8 +412,8 @@ login_access (pam_handle_t *pamh, struct login_info *item)
 	return NO;
     }
 #ifdef HAVE_LIBAUDIT
-    if (!item->noaudit && (match == YES || (match == ALL &&
-	nonall_match == YES)) && line[0] == '-') {
+    if (!item->noaudit && line[0] == '-' && (match == YES || (match == ALL &&
+	nonall_match == YES))) {
 	pam_modutil_audit_write(pamh, AUDIT_ANOM_LOGIN_LOCATION,
 	    "pam_access", 0);
     }
@@ -471,7 +471,9 @@ netgroup_match (pam_handle_t *pamh, const char *netgroup,
   int retval;
   char *mydomain = NULL;
 
-#if defined(HAVE_GETDOMAINNAME)
+#ifdef HAVE_YP_GET_DEFAUTL_DOMAIN
+  yp_get_default_domain(&mydomain);
+#elif defined(HAVE_GETDOMAINNAME)
   char domainname_res[256];
 
   if (getdomainname (domainname_res, sizeof (domainname_res)) == 0)
@@ -481,8 +483,6 @@ netgroup_match (pam_handle_t *pamh, const char *netgroup,
           mydomain = domainname_res;
         }
     }
-#elif defined(HAVE_YP_GET_DEFAULT_DOMAIN)
-  yp_get_default_domain(&mydomain);
 #endif
 
 #ifdef HAVE_INNETGR
@@ -573,7 +573,7 @@ group_match (pam_handle_t *pamh, const char *tok, const char* usr,
 
     if (debug)
         pam_syslog (pamh, LOG_DEBUG,
-		    "group_match: grp=%s, user=%s", tok, usr);
+		    "group_match: grp=%s, user=%s", grptok, usr);
 
     if (strlen(tok) < 3)
         return NO;
