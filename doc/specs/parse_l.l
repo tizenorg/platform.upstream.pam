@@ -8,7 +8,6 @@
 #include "parse_y.h"
 %}
 
-%option noyywrap
 %%
 
 \#[\$]+[a-zA-Z]*(\=[0-9]+)?          return NEW_COUNTER;

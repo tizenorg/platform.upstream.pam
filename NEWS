@@ -1,32 +1,5 @@
 Linux-PAM NEWS -- history of user-visible changes.
 
-Release 1.2.1
-* Fix CVE-2015-3238, affected PAM modules are pam_unix and pam_exec
-
-Release 1.2.0
-* Update documentation
-* Update translations
-* pam_unix: add quiet option
-* libpam: support alternative configuration files in /usr/lib/pam.d
-          as fallback
-* pam_env: add support for @{HOME} and @{SHELL}
-* libpam: add grantor field to audit records
-* libpam: Introduce pam_modutil_sanitize_helper_fds
-
-Release 1.1.8
-* pam_unix: bug fix for compiling with SELinux, fix crash at login time
-
-
-Release 1.1.7
-* Update translations
-* pam_exec: add stdout and type= options
-* pam_tty_audit: add options to control logging of passwords
-* pam_unix: Read defaults from /etc/login.defs
-* pam_userdb: Allow modern password hashes
-* pam_selinux/pam_tally2: Add tty and rhost to audit data
-* Lot of docu and code fixes
-
-
 Release 1.1.6
 * Update translations
 * pam_cracklib: Add more checks for weak passwords

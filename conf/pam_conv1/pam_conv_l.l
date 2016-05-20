@@ -24,7 +24,6 @@
     extern int current_line;
 %}
 
-%option noyywrap
 %%
 
 "#"[^\n]*         ; /* skip comments (sorry) */

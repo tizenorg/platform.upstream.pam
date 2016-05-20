@@ -167,13 +167,9 @@ noinit - instance directory init script will not be executed.
 shared - the instance directories for "context" and "level" methods will not
 contain the user name and will be shared among all users.
 
-mntopts=value - value of this flag is passed to the mount call when the tmpfs
-mount is done. It allows for example the specification of the maximum size of
-the tmpfs instance that is created by the mount call. See mount(8) for details.
-
 The directory where polyinstantiated instances are to be created, must exist
 and must have, by default, the mode of 0000. The requirement that the instance
-parent be of mode 0000 can be overridden with the command line option 
+parent be of mode 0000 can be overridden with the command line option
 ignore_instance_parent_mode
 
 In case of context or level polyinstantiation the SELinux context which is used

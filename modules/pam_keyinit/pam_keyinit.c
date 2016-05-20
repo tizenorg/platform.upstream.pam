@@ -218,8 +218,7 @@ int pam_sm_open_session(pam_handle_t *pamh, int flags UNUSED,
 
 	if (uid != old_uid && setreuid(uid, -1) < 0) {
 		error(pamh, "Unable to change UID to %d temporarily\n", uid);
-		if (setregid(old_gid, -1) < 0)
-			error(pamh, "Unable to change GID back to %d\n", old_gid);
+		setregid(old_gid, -1);
 		return PAM_SESSION_ERR;
 	}
 

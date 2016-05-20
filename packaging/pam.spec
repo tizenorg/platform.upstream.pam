@@ -10,7 +10,7 @@
 %define _pamconfdir %{_sysconfdir}/pam.d
 
 Name:           pam
-Version:        1.2.1
+Version:        1.1.6
 Release:        0
 License:        BSD-2.0 or GPL-2.0+
 Summary:        A Security Tool that Provides Authentication for Applications
