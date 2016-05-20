@@ -82,15 +82,10 @@ parse_entry (char *line, opwd *data)
 {
   const char delimiters[] = ":";
   char *endptr;
-  char *count;
 
   data->user = strsep (&line, delimiters);
   data->uid = strsep (&line, delimiters);
-  count = strsep (&line, delimiters);
-  if (count == NULL)
-      return 1;
-
-  data->count = strtol (count, &endptr, 10);
+  data->count = strtol (strsep (&line, delimiters), &endptr, 10);
   if (endptr != NULL && *endptr != '\0')
       return 1;
 
@@ -113,7 +108,7 @@ compare_password(const char *newpass, const char *oldpass)
   outval = crypt (newpass, oldpass);
 #endif
 
-  return outval != NULL && strcmp(outval, oldpass) == 0;
+  return strcmp(outval, oldpass) == 0;
 }
 
 /* Check, if the new password is already in the opasswd file.  */

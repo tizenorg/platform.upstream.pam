@@ -22,6 +22,9 @@ int pam_open_session(pam_handle_t *pamh, int flags)
     }
     retval = _pam_dispatch(pamh, flags, PAM_OPEN_SESSION);
 
+#ifdef HAVE_LIBAUDIT
+    retval = _pam_auditlog(pamh, PAM_OPEN_SESSION, retval, flags);
+#endif
     return retval;
 }
 
@@ -39,6 +42,10 @@ int pam_close_session(pam_handle_t *pamh, int flags)
     }
 
     retval = _pam_dispatch(pamh, flags, PAM_CLOSE_SESSION);
+
+#ifdef HAVE_LIBAUDIT
+    retval = _pam_auditlog(pamh, PAM_CLOSE_SESSION, retval, flags);
+#endif
 
     return retval;
 

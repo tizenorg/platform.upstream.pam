@@ -98,40 +98,38 @@ int _unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl,
   /* fork */
   child = fork();
   if (child == 0) {
+    int i=0;
+    struct rlimit rlim;
     static char *envp[] = { NULL };
-    const char *args[] = { NULL, NULL, NULL, NULL };
+    char *args[] = { NULL, NULL, NULL, NULL };
+
+    /* reopen stdout as pipe */
+    dup2(fds[1], STDOUT_FILENO);
 
     /* XXX - should really tidy up PAM here too */
 
-    /* reopen stdout as pipe */
-    if (dup2(fds[1], STDOUT_FILENO) != STDOUT_FILENO) {
-      pam_syslog(pamh, LOG_ERR, "dup2 of %s failed: %m", "stdout");
-      _exit(PAM_AUTHINFO_UNAVAIL);
-    }
-
-    if (pam_modutil_sanitize_helper_fds(pamh, PAM_MODUTIL_PIPE_FD,
-					PAM_MODUTIL_IGNORE_FD,
-					PAM_MODUTIL_PIPE_FD) < 0) {
-      _exit(PAM_AUTHINFO_UNAVAIL);
+    if (getrlimit(RLIMIT_NOFILE,&rlim)==0) {
+      if (rlim.rlim_max >= MAX_FD_NO)
+        rlim.rlim_max = MAX_FD_NO;
+      for (i=0; i < (int)rlim.rlim_max; i++) {
+	if (i != STDOUT_FILENO) {
+	  close(i);
+	}
+      }
     }
 
     if (geteuid() == 0) {
       /* must set the real uid to 0 so the helper will not error
          out if pam is called from setuid binary (su, sudo...) */
-      if (setuid(0) == -1) {
-          pam_syslog(pamh, LOG_ERR, "setuid failed: %m");
-          printf("-1\n");
-          fflush(stdout);
-          _exit(PAM_AUTHINFO_UNAVAIL);
-      }
+      setuid(0);
     }
 
     /* exec binary helper */
-    args[0] = CHKPWD_HELPER;
-    args[1] = user;
-    args[2] = "chkexpiry";
+    args[0] = x_strdup(CHKPWD_HELPER);
+    args[1] = x_strdup(user);
+    args[2] = x_strdup("chkexpiry");
 
-    execve(CHKPWD_HELPER, (char *const *) args, envp);
+    execve(CHKPWD_HELPER, args, envp);
 
     pam_syslog(pamh, LOG_ERR, "helper binary execve failed: %m");
     /* should not get here: exit with error */
@@ -144,8 +142,7 @@ int _unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl,
     if (child > 0) {
       char buf[32];
       int rc=0;
-      /* wait for helper to complete: */
-      while ((rc=waitpid(child, &retval, 0)) < 0 && errno == EINTR);
+      rc=waitpid(child, &retval, 0);  /* wait for helper to complete */
       if (rc<0) {
 	pam_syslog(pamh, LOG_ERR, "unix_chkpwd waitpid returned %d: %m", rc);
 	retval = PAM_AUTH_ERR;

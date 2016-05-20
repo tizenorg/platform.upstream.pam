@@ -57,26 +57,20 @@ install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)
 	$(mkinstalldirs) $(DESTDIR)$(pdfdir)
 	$(mkinstalldirs) $(DESTDIR)$(htmldir)
-	if test -f html/Linux-PAM_MWG.html; then \
+	test -f html/Linux-PAM_MWG.html || exit 0; \
 	    $(install_sh_DATA) html/Linux-PAM_MWG.html html/mwg-*.html \
-		$(DESTDIR)$(htmldir)/; \
-	elif test -f $(srcdir)/html/Linux-PAM_MWG.html; then \
+		$(DESTDIR)$(htmldir)/ || \
 	    $(install_sh_DATA) $(srcdir)/html/Linux-PAM_MWG.html \
-		$(srcdir)/html/mwg-*.html \
-		$(DESTDIR)$(htmldir)/; \
-	fi
-	if test -f Linux-PAM_MWG.txt; then \
-	    $(install_sh_DATA) Linux-PAM_MWG.txt $(DESTDIR)$(docdir)/; \
-	elif test -f $(srcdir)/Linux-PAM_MWG.txt; then \
+		$(srcdir)/html/sag-*.html \
+		$(DESTDIR)$(htmldir)/
+	test -f Linux-PAM_MWG.txt || exit 0; \
+	    $(install_sh_DATA) Linux-PAM_MWG.txt $(DESTDIR)$(docdir)/ || \
 	    $(install_sh_DATA) $(srcdir)/Linux-PAM_MWG.txt \
-		$(DESTDIR)$(docdir)/; \
-	fi
-	if test -f Linux-PAM_MWG.pdf; then \
-	    $(install_sh_DATA) Linux-PAM_MWG.pdf $(DESTDIR)$(pdfdir)/; \
-	elif test -f $(srcdir)/Linux-PAM_MWG.pdf; then \
+		$(DESTDIR)$(docdir)/
+	test -f Linux-PAM_MWG.pdf || exit 0; \
+	    $(install_sh_DATA) Linux-PAM_MWG.pdf $(DESTDIR)$(pdfdir)/ || \
 	    $(install_sh_DATA) $(srcdir)/Linux-PAM_MWG.pdf \
-		$(DESTDIR)$(pdfdir)/; \
-	fi
+		$(DESTDIR)$(pdfdir)/
 
 uninstall-local:
 	-rm $(DESTDIR)$(htmldir)/Linux-PAM_MWG.html
@@ -86,28 +80,19 @@ uninstall-local:
 
 releasedocs: all
 	$(mkinstalldirs) $(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/html
-	if test -f html/Linux-PAM_MWG.html; then \
+	test -f html/Linux-PAM_MWG.html || exit 0; \
 	    cp -ap html/Linux-PAM_MWG.html html/mwg-*.html \
-		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/html/; \
-	elif test -f $(srcdir)/html/Linux-PAM_MWG.html; then \
+		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/html/ || \
 	    cp -ap $(srcdir)/html/Linux-PAM_MWG.html \
 		$(srcdir)/html/mwg-*.html \
-		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/html/; \
-	else exit 1; \
-	fi
-	if test -f Linux-PAM_MWG.txt; then \
+		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/html/
+	test -f Linux-PAM_MWG.txt || exit 0; \
 	    cp -p Linux-PAM_MWG.txt \
-		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/; \
-	elif test -f $(srcdir)/Linux-PAM_MWG.txt; then \
+		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/ || \
 	    cp -p $(srcdir)/Linux-PAM_MWG.txt \
-		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/; \
-	else exit 1; \
-	fi
-	if test -f Linux-PAM_MWG.pdf; then \
+		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/
+	test -f Linux-PAM_MWG.pdf || exit 0; \
 	    cp -p Linux-PAM_MWG.pdf \
-		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/; \
-	elif test -f $(srcdir)/Linux-PAM_MWG.pdf; then \
+		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/ || \
 	    cp -p $(srcdir)/Linux-PAM_MWG.pdf \
-		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/; \
-	else exit 1; \
-	fi
+		$(top_builddir)/Linux-PAM-$(VERSION)/doc/mwg/
