@@ -6,8 +6,8 @@
 CLEANFILES = *~
 MAINTAINERCLEANFILES = $(MANS) README
 
-XMLS = README.xml pam_timestamp.8.xml pam_timestamp_check.8.xml
-man_MANS = pam_timestamp.8 pam_timestamp_check.8
+XMLS = README.xml pam_timestamp.8.xml
+man_MANS = pam_timestamp.8
 dist_TESTS = tst-pam_timestamp
 nodist_TESTS = hmacfile
 TESTS = $(dist_TESTS) $(nodist_TESTS)
@@ -28,15 +28,9 @@ if HAVE_VERSIONING
 endif
 
 securelib_LTLIBRARIES = pam_timestamp.la
-sbin_PROGRAMS = pam_timestamp_check
 
 pam_timestamp_la_SOURCES = pam_timestamp.c hmacsha1.c sha1.c
 pam_timestamp_la_CFLAGS = $(AM_CFLAGS)
-
-pam_timestamp_check_SOURCES = pam_timestamp_check.c
-pam_timestamp_check_CFLAGS = $(AM_CFLAGS) @PIE_CFLAGS@
-pam_timestamp_check_LDADD = $(top_builddir)/libpam/libpam.la
-pam_timestamp_check_LDFLAGS = @PIE_LDFLAGS@
 
 hmacfile_SOURCES = hmacfile.c hmacsha1.c sha1.c
 hmacfile_LDADD = $(top_builddir)/libpam/libpam.la

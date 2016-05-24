@@ -118,7 +118,6 @@ fi
 %license COPYING
 %{_sbindir}/pam_tally
 %{_sbindir}/pam_tally2
-%attr(4755,root,root) %{_sbindir}/pam_timestamp_check
 %attr(4755,root,root) %{_sbindir}/unix_chkpwd
 %attr(0700,root,root) %{_sbindir}/unix_update
 %attr(0755,root,root) %{_sbindir}/mkhomedir_helper
