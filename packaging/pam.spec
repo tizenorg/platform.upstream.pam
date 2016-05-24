@@ -9,8 +9,9 @@
 %define _secconfdir %{_sysconfdir}/security
 %define _pamconfdir %{_sysconfdir}/pam.d
 
-# In current, we don't use pam_timestamp_check because of security issue
+# In current, we don't use these because of security issue
 %define WITH_TIMESTAMP_CHECK 0
+%define WITH_CHKPWD 0
 
 Name:           pam
 Version:        1.1.6
@@ -90,6 +91,9 @@ CFLAGS="-fPIC %{optflags} " ; export CFLAGS
 %if ! %{?WITH_TIMESTAMP_CHECK}
 rm %{buildroot}%{_sbindir}/pam_timestamp_check
 %endif
+%if ! %{?WITH_CHKPWD}
+rm %{buildroot}%{_sbindir}/unix_chkpwd
+%endif
 
 # RPM uses docs from source tree
 rm -rf %{buildroot}%{_datadir}/doc/Linux-PAM
@@ -129,7 +133,9 @@ fi
 %if %{?WITH_TIMESTAMP_CHECK}
 %attr(4755,root,root) %{_sbindir}/pam_timestamp_check
 %endif
+%if %{?WITH_CHKPWD}
 %attr(4755,root,root) %{_sbindir}/unix_chkpwd
+%endif
 %attr(0700,root,root) %{_sbindir}/unix_update
 %attr(0755,root,root) %{_sbindir}/mkhomedir_helper
 %config %{_sysconfdir}/security/limits.conf
