@@ -10,14 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Linux-PAM\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/projects/pam\n"
-"POT-Creation-Date: 2012-08-17 11:35+0200\n"
+"POT-Creation-Date: 2016-06-23 08:21+0900\n"
 "PO-Revision-Date: 2012-02-28 10:38+0000\n"
 "Last-Translator: runa <runabh@gmail.com>\n"
 "Language-Team: Bengali (India) <anubad@lists.ankur.org.in>\n"
+"Language: bn_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: bn_IN\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: libpam_misc/misc_conv.c:33
@@ -245,12 +245,12 @@ msgid "contains the user name in some form"
 msgstr "কোনো রূপে ব্যবহারকারী নাম অন্তর্ভুক্ত হয়েছে"
 
 #: modules/pam_cracklib/pam_cracklib.c:701
-#: modules/pam_unix/pam_unix_passwd.c:494
+#: modules/pam_unix/pam_unix_passwd.c:502
 msgid "No password supplied"
 msgstr "কোনো পাসওয়ার্ড উল্লিখিত হয়নি"
 
 #: modules/pam_cracklib/pam_cracklib.c:701
-#: modules/pam_unix/pam_unix_passwd.c:494
+#: modules/pam_unix/pam_unix_passwd.c:502
 msgid "Password unchanged"
 msgstr "পাসওয়ার্ড পরিবর্তন করা হয়নি"
 
@@ -374,7 +374,7 @@ msgid "Unable to create and initialize directory '%s'."
 msgstr "ডিরেক্টরি '%s' নির্মাণ ও আরম্ভ করতে ব্যর্থ।"
 
 #: modules/pam_pwhistory/pam_pwhistory.c:217
-#: modules/pam_unix/pam_unix_passwd.c:515
+#: modules/pam_unix/pam_unix_passwd.c:523
 msgid "Password has been already used. Choose another."
 msgstr "পাসওয়ার্ড পূর্বে ব্যবহৃত হয়েছে। একটি পৃথক পাসওয়ার্ড নির্বাচন করুন।"
 
@@ -524,26 +524,26 @@ msgstr ""
 "   [-u username] [--user username]\n"
 "   [-r] [--reset[=n]] [--quiet]\n"
 
-#: modules/pam_timestamp/pam_timestamp.c:345
+#: modules/pam_timestamp/pam_timestamp.c:356
 #, c-format
 msgid "Access granted (last access was %ld seconds ago)."
 msgstr "প্রবেশাধিকার প্রদান করা হয়েছে (%ld পূর্বে সর্বশেষ লগ-ইন করা হয়েছে)।"
 
-#: modules/pam_unix/pam_unix_acct.c:241 modules/pam_unix/pam_unix_acct.c:263
+#: modules/pam_unix/pam_unix_acct.c:243 modules/pam_unix/pam_unix_acct.c:265
 msgid "Your account has expired; please contact your system administrator"
 msgstr ""
 "আপনার অ্যাকাউন্টের মেয়াদপূর্ণ হয়েছে; অনুগ্রহ করে সিস্টেম অ্যাডমিনিস্ট্রেটরের সাথে "
 "যোগাযোগ করুন।"
 
-#: modules/pam_unix/pam_unix_acct.c:249
+#: modules/pam_unix/pam_unix_acct.c:251
 msgid "You are required to change your password immediately (root enforced)"
 msgstr "আপনার পাসওয়ার্ড এই মুহূর্তে পরিবর্তন করা আবশ্যক (root দ্বারা কার্যকরী)"
 
-#: modules/pam_unix/pam_unix_acct.c:255
+#: modules/pam_unix/pam_unix_acct.c:257
 msgid "You are required to change your password immediately (password aged)"
 msgstr "আপনার পাসওয়ার্ড এই মুহূর্তে পরিবর্তন করা আবশ্যক (password-র মেয়াদ পূর্ণ হয়েছে)"
 
-#: modules/pam_unix/pam_unix_acct.c:276 modules/pam_unix/pam_unix_acct.c:283
+#: modules/pam_unix/pam_unix_acct.c:278 modules/pam_unix/pam_unix_acct.c:285
 #, c-format
 msgid "Warning: your password will expire in %d day"
 msgid_plural "Warning: your password will expire in %d days"
@@ -551,36 +551,36 @@ msgstr[0] "সতর্কবাণী: %d দিন পরে পাসওয়�
 msgstr[1] "সতর্কবাণী: %d দিন পরে পাসওয়ার্ডের মেয়াদপূর্ণ হবে"
 
 #. TRANSLATORS: only used if dngettext is not supported
-#: modules/pam_unix/pam_unix_acct.c:288
+#: modules/pam_unix/pam_unix_acct.c:290
 #, c-format
 msgid "Warning: your password will expire in %d days"
 msgstr "সতর্কবাণী: %d দিন পরে পাসওয়ার্ডের মেয়াদপূর্ণ হবে"
 
-#: modules/pam_unix/pam_unix_passwd.c:396
+#: modules/pam_unix/pam_unix_passwd.c:404
 msgid "NIS password could not be changed."
 msgstr "NIS পাসওয়ার্ড পরিবর্তন করা সম্ভব হয়নি।"
 
-#: modules/pam_unix/pam_unix_passwd.c:511
+#: modules/pam_unix/pam_unix_passwd.c:519
 msgid "You must choose a longer password"
 msgstr "চিহ্নিত পাসওয়ার্ডের থেকে লম্বা পাসওয়ার্ড উল্লেখ করা আবশ্যক"
 
-#: modules/pam_unix/pam_unix_passwd.c:617
+#: modules/pam_unix/pam_unix_passwd.c:625
 #, c-format
 msgid "Changing password for %s."
 msgstr "%s-র পাসওয়ার্ড পরিবর্তন করা হচ্ছে।"
 
-#: modules/pam_unix/pam_unix_passwd.c:628
+#: modules/pam_unix/pam_unix_passwd.c:636
 msgid "(current) UNIX password: "
 msgstr "(বর্তমান) UNIX পাসওয়ার্ড: "
 
-#: modules/pam_unix/pam_unix_passwd.c:663
+#: modules/pam_unix/pam_unix_passwd.c:671
 msgid "You must wait longer to change your password"
 msgstr "কিছু কাল পরে পাসওয়ার্ড পরিবর্তন করা সম্ভব হবে"
 
-#: modules/pam_unix/pam_unix_passwd.c:723
+#: modules/pam_unix/pam_unix_passwd.c:731
 msgid "Enter new UNIX password: "
 msgstr "নতুন UNIX পাসওয়ার্ড উল্লেখ করুন: "
 
-#: modules/pam_unix/pam_unix_passwd.c:724
+#: modules/pam_unix/pam_unix_passwd.c:732
 msgid "Retype new UNIX password: "
 msgstr "নতুন UNIX পাসওয়ার্ড পুনরায় লিখুন: "
